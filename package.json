@@ -1,0 +1,43 @@
+{
+  "name": "signum-smartc-testbed",
+  "version": "0.0.1",
+  "description": "A testbed smart contract development with SmartC for Signum blockchain platform",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc",
+    "prepare": "husky install",
+    "lint": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohager/signum-smartc-testbed.git"
+  },
+  "keywords": [
+    "signum",
+    "blockchain",
+    "smartcontracts",
+    "web3",
+    "clang"
+  ],
+  "author": "ohager",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ohager/signum-smartc-testbed/issues"
+  },
+  "homepage": "https://github.com/ohager/signum-smartc-testbed#readme",
+  "dependencies": {
+    "smartc-signum-simulator": "file:smartc-signum-simulator-2.0.0.tgz"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
