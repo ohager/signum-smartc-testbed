@@ -59,6 +59,9 @@ describe("Stock Contract - Change Usage Fee", () => {
 });
 ```
 
+![image](https://github.com/ohager/signum-smartc-testbed/assets/3920663/9a3ba02c-5bb3-420e-885c-e805b0ce10ca)
+
+
 ## ROADMAP
 
 - [] Github Starter Template
