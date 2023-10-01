@@ -20,7 +20,7 @@
 <p>Use this class to run scenarios against the simulator.</p>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">Scenario1</span><span class="hl-1">: </span><span class="hl-3">UserTransactionObj</span><span class="hl-1">[] = [</span><br/><span class="hl-1">  {</span><br/><span class="hl-1">    </span><span class="hl-4">blockheight:</span><span class="hl-1"> </span><span class="hl-5">1</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">amount:</span><span class="hl-1"> </span><span class="hl-5">6_0000_0000</span><span class="hl-0">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">sender:</span><span class="hl-1"> </span><span class="hl-5">1</span><span class="hl-0">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">recipient:</span><span class="hl-1"> </span><span class="hl-5">2</span><span class="hl-0">n</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  {</span><br/><span class="hl-1">    </span><span class="hl-4">blockheight:</span><span class="hl-1"> </span><span class="hl-5">3</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">amount:</span><span class="hl-1"> </span><span class="hl-5">5000_0000</span><span class="hl-0">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">sender:</span><span class="hl-1"> </span><span class="hl-5">1</span><span class="hl-0">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">recipient:</span><span class="hl-1"> </span><span class="hl-5">2</span><span class="hl-0">n</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-6">// ...</span><br/><span class="hl-1">]</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">ContractPath</span><span class="hl-1"> = </span><span class="hl-7">join</span><span class="hl-1">(</span><span class="hl-4">__dirname</span><span class="hl-1"> + </span><span class="hl-8">&#39;./contract.smart.c&#39;</span><span class="hl-1">)</span><br/><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">testbed</span><span class="hl-1"> = </span><span class="hl-4">SimulatorTestbed</span><br/><span class="hl-1">    .</span><span class="hl-7">loadContract</span><span class="hl-1">(</span><span class="hl-4">ContractPath</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-7">runScenario</span><span class="hl-1">(</span><span class="hl-4">Scenario1</span><span class="hl-1">);</span><br/><br/><span class="hl-1"> </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">bc</span><span class="hl-1"> = </span><span class="hl-4">testbed</span><span class="hl-1">.</span><span class="hl-4">blockchain</span><span class="hl-1">;</span><br/><span class="hl-1"> </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">tx</span><span class="hl-1"> = </span><span class="hl-4">bc</span><span class="hl-1">.</span><span class="hl-4">transactions</span><span class="hl-1">;</span><br/><span class="hl-1"> </span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">maps</span><span class="hl-1"> = </span><span class="hl-4">testbed</span><span class="hl-1">.</span><span class="hl-7">getMapsPerSlot</span><span class="hl-1">().</span><span class="hl-7">filter</span><span class="hl-1">(({</span><span class="hl-4">k1</span><span class="hl-1">, </span><span class="hl-4">k2</span><span class="hl-1">, </span><span class="hl-4">value</span><span class="hl-1">}) </span><span class="hl-0">=&gt;</span><span class="hl-1"> ...)</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-4">Scenario1</span><span class="hl-1">: </span><span class="hl-8">UserTransactionObj</span><span class="hl-1">[] = [</span><br/><span class="hl-1">  {</span><br/><span class="hl-1">    </span><span class="hl-5">blockheight:</span><span class="hl-1"> </span><span class="hl-6">1</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">amount:</span><span class="hl-1"> </span><span class="hl-6">6_0000_0000</span><span class="hl-3">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">sender:</span><span class="hl-1"> </span><span class="hl-6">1</span><span class="hl-3">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">recipient:</span><span class="hl-1"> </span><span class="hl-6">2</span><span class="hl-3">n</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  {</span><br/><span class="hl-1">    </span><span class="hl-5">blockheight:</span><span class="hl-1"> </span><span class="hl-6">3</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">amount:</span><span class="hl-1"> </span><span class="hl-6">5000_0000</span><span class="hl-3">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">sender:</span><span class="hl-1"> </span><span class="hl-6">1</span><span class="hl-3">n</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-5">recipient:</span><span class="hl-1"> </span><span class="hl-6">2</span><span class="hl-3">n</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-7">// ...</span><br/><span class="hl-1">]</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-4">ContractPath</span><span class="hl-1"> = </span><span class="hl-0">join</span><span class="hl-1">(</span><span class="hl-5">__dirname</span><span class="hl-1"> + </span><span class="hl-2">&#39;./contract.smart.c&#39;</span><span class="hl-1">)</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-4">testbed</span><span class="hl-1"> = </span><span class="hl-5">SimulatorTestbed</span><br/><span class="hl-1">    .</span><span class="hl-0">loadContract</span><span class="hl-1">(</span><span class="hl-5">ContractPath</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">runScenario</span><span class="hl-1">(</span><span class="hl-5">Scenario1</span><span class="hl-1">);</span><br/><br/><span class="hl-1"> </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-4">bc</span><span class="hl-1"> = </span><span class="hl-5">testbed</span><span class="hl-1">.</span><span class="hl-5">blockchain</span><span class="hl-1">;</span><br/><span class="hl-1"> </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-4">tx</span><span class="hl-1"> = </span><span class="hl-5">bc</span><span class="hl-1">.</span><span class="hl-5">transactions</span><span class="hl-1">;</span><br/><span class="hl-1"> </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-4">maps</span><span class="hl-1"> = </span><span class="hl-5">testbed</span><span class="hl-1">.</span><span class="hl-0">getMapsPerSlot</span><span class="hl-1">().</span><span class="hl-0">filter</span><span class="hl-1">(({</span><span class="hl-5">k1</span><span class="hl-1">, </span><span class="hl-5">k2</span><span class="hl-1">, </span><span class="hl-5">value</span><span class="hl-1">}) </span><span class="hl-3">=&gt;</span><span class="hl-1"> ...)</span>
 </code><button>Copy</button></pre>
 <p>This</p>
 </div></section>
@@ -29,7 +29,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">SimulatorTestbed</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L57">simulator-testbed.ts:57</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L57">simulator-testbed.ts:57</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -76,14 +76,14 @@
 <h5><span class="tsd-kind-parameter">context</span>: <a href="../interfaces/_internal_.TestbedContext.html" class="tsd-signature-type tsd-kind-interface">TestbedContext</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L58">simulator-testbed.ts:58</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L58">simulator-testbed.ts:58</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="context" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>context</span><a href="#context" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">context</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/_internal_.TestbedContext.html" class="tsd-signature-type tsd-kind-interface">TestbedContext</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L58">simulator-testbed.ts:58</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L58">simulator-testbed.ts:58</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member"><a id="blockchain" class="tsd-anchor"></a>
@@ -97,7 +97,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L101">simulator-testbed.ts:101</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L101">simulator-testbed.ts:101</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="contracts" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>contracts</span><a href="#contracts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -109,7 +109,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L110">simulator-testbed.ts:110</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L110">simulator-testbed.ts:110</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="simulator" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>simulator</span><a href="#simulator" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -121,7 +121,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L92">simulator-testbed.ts:92</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L92">simulator-testbed.ts:92</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="getAccount" class="tsd-anchor"></a>
@@ -143,7 +143,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L151">simulator-testbed.ts:151</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L151">simulator-testbed.ts:151</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getContract" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Contract</span><a href="#getContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -163,7 +163,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L120">simulator-testbed.ts:120</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L120">simulator-testbed.ts:120</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getContractMemory" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Memory</span><a href="#getContractMemory" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -183,7 +183,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L190">simulator-testbed.ts:190</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L190">simulator-testbed.ts:190</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getContractMemoryValue" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Memory<wbr/>Value</span><a href="#getContractMemoryValue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -210,7 +210,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L202">simulator-testbed.ts:202</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L202">simulator-testbed.ts:202</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getMapsPerSlot" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Maps<wbr/>Per<wbr/>Slot</span><a href="#getMapsPerSlot" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -230,7 +230,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L141">simulator-testbed.ts:141</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L141">simulator-testbed.ts:141</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getTransactions" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Transactions</span><a href="#getTransactions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -244,7 +244,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L160">simulator-testbed.ts:160</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L160">simulator-testbed.ts:160</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="runScenario" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>run<wbr/>Scenario</span><a href="#runScenario" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -266,7 +266,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L170">simulator-testbed.ts:170</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L170">simulator-testbed.ts:170</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="selectCurrentContract" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>select<wbr/>Current<wbr/>Contract</span><a href="#selectCurrentContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -285,7 +285,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L130">simulator-testbed.ts:130</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L130">simulator-testbed.ts:130</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="loadContract" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>load<wbr/>Contract</span><a href="#loadContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -305,7 +305,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L78">simulator-testbed.ts:78</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L78">simulator-testbed.ts:78</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="toSimulatorTransactions" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>to<wbr/>Simulator<wbr/>Transactions</span><a href="#toSimulatorTransactions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -327,7 +327,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/40d3d99/src/simulator-testbed.ts#L66">simulator-testbed.ts:66</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/3f3a09c/src/simulator-testbed.ts#L66">simulator-testbed.ts:66</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
