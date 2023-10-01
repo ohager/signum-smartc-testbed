@@ -3,10 +3,7 @@
   "version": "0.0.2",
   "description": "A testbed for faster smart contract development with SmartC for Signum blockchain platform",
   "main": "./dist/index.js",
-  "exports": {
-    ".": "./dist/index.js",
-    "./simulator.js": "./node_modules/smartc-signum-simulator/dist/index.js"
-  },
+  "exports": "./dist/index.js",
   "scripts": {
     "test": "vitest",
     "compile": "tsc",
