@@ -5,7 +5,10 @@ import {
   reset,
   Contracts,
   MemoryObj,
-  UserTransactionObj, MapObj, AccountObj, BlockchainTransactionObj,
+  UserTransactionObj,
+  MapObj,
+  AccountObj,
+  BlockchainTransactionObj,
 } from "smartc-signum-simulator";
 import { readFileSync } from "fs";
 
@@ -52,7 +55,10 @@ export type ContractsType = typeof Contracts;
  *  const tx = bc.transactions;
  *  const maps = testbed.getMapsPerSlot().filter(({k1, k2, value}) => ...)
  * ```
- * This
+ *
+ * This testbed loads a SmartC Contract and a scenario (set of transactions) and forges all necessary blocks.
+ * It's possible to inspect all the results, i.e. transactions, kkv-maps, accounts, in-memory variables, and test them against
+ * expected result sets. This class is meant to be used with Test Runners like [Vitest](https://vitest.dev/) or [Jest](https://jestjs.io/).
  */
 export class SimulatorTestbed {
   private constructor(private context: TestbedContext) {}
@@ -107,7 +113,7 @@ export class SimulatorTestbed {
    *
    * @return {ContractsType} the contracts
    */
-  get contracts() : ContractsType {
+  get contracts(): ContractsType {
     return this.context.contracts;
   }
 
@@ -138,7 +144,7 @@ export class SimulatorTestbed {
    * @param {number} slot - The slot number (default: 0).
    * @return {any} The maps per slot.
    */
-  getMapsPerSlot(slot: number = 0) : MapObj[] {
+  getMapsPerSlot(slot: number = 0): MapObj[] {
     return this.blockchain.maps[slot].map;
   }
 
@@ -148,7 +154,7 @@ export class SimulatorTestbed {
    * @param {bigint} accountId - The ID of the account to retrieve.
    * @return {AccountObj | undefined} The account with the specified ID, or undefined if no account is found.
    */
-  getAccount(accountId: bigint) : AccountObj | undefined {
+  getAccount(accountId: bigint): AccountObj | undefined {
     return this.blockchain.accounts.find((a) => a.id === accountId);
   }
 
@@ -157,8 +163,8 @@ export class SimulatorTestbed {
    *
    * @return {BlockchainTransactionObj[]} - An array of BlockchainTransactionObj objects.
    */
-  getTransactions() : BlockchainTransactionObj[] {
-      return this.blockchain.transactions
+  getTransactions(): BlockchainTransactionObj[] {
+    return this.blockchain.transactions;
   }
 
   /**
