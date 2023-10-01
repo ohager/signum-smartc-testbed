@@ -2,6 +2,10 @@
 
 A Test Environment for automated testing of Signum SmartC - Smart Contract Compiler
 
+Develop and your SmartC Contracts faster and more secure using a full TDD approach!
+
+![image](https://github.com/ohager/signum-smartc-testbed/assets/3920663/9a3ba02c-5bb3-420e-885c-e805b0ce10ca)
+
 ## Motivation
 
 The [SmartC Simulator](https://deleterium.info/sc-simulator) is an awesome environment to develop Smart Contracts for [Signum Blockchain](https://signum.network).
@@ -11,17 +15,44 @@ and develop faster more complex scenarios without being victim of testing fatigu
 
 ---
 
-##🧪 This is still experimental\*\*
+##🧪 This is still experimental
 
 **☢️ Use at your own risk ☢️**
 
-Look at [API Documentation](https://ohager.github.io/signum-smartc-testbed/index.html)
+## How to use?
 
-## How it is meant to being used
+Use the testbed as a programmable testing environment. Use it together with test runner like [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/) (recommended)
 
-Use the testbed as a programmable testing environment. Use it together with test runner like [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/)
+Install it using your favorite package manager
 
-A use case may look like this (taken from a real application)
+`npm i signum-smartc-testbed --dev` or `yarn add signum-smartc-testbed -D` (or similar)
+
+Follow instructions how to set up the Testrunner, i.e. Jest or Vitest (recommended).
+
+A recommended project structure is like this:
+
+```
+.
+├── contract
+│   ├── context.ts << constants like Account Ids, Map Keys, Token Ids etc
+│   ├── method-1
+│   │   ├── method-1.scenarios.ts << Transaction Set for method-1
+│   │   └── methosd-1.test.ts << The unit tests
+│   ├── method-2
+│   │   ├── method-2.scenarios.ts
+│   │   └── methosd-12.test.ts
+│   └── contract.smart.c << The contract itself
+├── package.json
+├── README.md
+├── tsconfig.json
+├── vitest.config.ts
+└── yarn.lock
+```
+
+Within the unit tests it's recommended to reset the testbed on each test to avoid having previous states. As a consequence
+the test runner must not run the tests in parallel, but in-line.
+
+A typical test suite may look like this (taken from a real application)
 
 ```ts
 describe("Stock Contract - Change Usage Fee", () => {
@@ -59,7 +90,7 @@ describe("Stock Contract - Change Usage Fee", () => {
 });
 ```
 
-![image](https://github.com/ohager/signum-smartc-testbed/assets/3920663/9a3ba02c-5bb3-420e-885c-e805b0ce10ca)
+Look at [API Documentation](https://ohager.github.io/signum-smartc-testbed/index.html) for details.
 
 ## ROADMAP
 
