@@ -6,9 +6,11 @@
   "exports": "./dist/index.js",
   "scripts": {
     "test": "vitest",
-    "build": "tsc",
+    "compile": "tsc",
+    "build": "npm run compile && ./build.sh",
     "prepare": "husky install",
-    "lint": "lint-staged"
+    "lint": "lint-staged",
+    "docs": "typedoc"
   },
   "repository": {
     "type": "git",
@@ -35,7 +37,10 @@
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "typedoc": "^0.25.1",
+    "typedoc-plugin-missing-exports": "^2.1.0",
+    "typedoc-theme-oxide": "^0.1.6"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
