@@ -37,10 +37,10 @@ A recommended project structure is like this:
 │   ├── context.ts << constants like Account Ids, Map Keys, Token Ids etc
 │   ├── method-1
 │   │   ├── method-1.scenarios.ts << Transaction Set for method-1
-│   │   └── methosd-1.test.ts << The unit tests
+│   │   └── method-1.test.ts << The unit tests
 │   ├── method-2
 │   │   ├── method-2.scenarios.ts
-│   │   └── methosd-12.test.ts
+│   │   └── method-12.test.ts
 │   └── contract.smart.c << The contract itself
 ├── package.json
 ├── README.md
@@ -96,6 +96,6 @@ Look at [API Documentation](https://ohager.github.io/signum-smartc-testbed/index
 
 - [ ] Github Starter Template
 - [ ] Unit Tests
-- [ ] Externalize Utility Functions, e.g. method args conversion
+- [x] Externalize Utility Functions, e.g. method args conversion
 - [ ] Stable MultiSlot Support
 - [ ] Adding Testbed for real Blockchain Node
