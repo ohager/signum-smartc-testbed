@@ -856,7 +856,7 @@ smartc-signum-compiler@^2.1.1:
 
 "smartc-signum-simulator@file:smartc-signum-simulator-2.0.0.tgz":
   version "2.0.0"
-  resolved "file:smartc-signum-simulator-2.0.0.tgz#5cea422a2428180d99b2467add326b81321ae0b5"
+  resolved "file:smartc-signum-simulator-2.0.0.tgz#1f275247137122207fde5d66fc2a413afa6c03cd"
   dependencies:
     smartc-assembly-highlight "^1.1.1"
     smartc-signum-compiler "^2.1.1"
