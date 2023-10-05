@@ -148,7 +148,7 @@ export class SimulatorTestbed {
 
             const init = initializableVars.reduce((c, v) => {
                 const iv = initializers[v];
-                if (iv) {
+                if (iv !== undefined) {
                     const value = typeof iv === 'string' ? `"${iv}"` : iv.toString()
                     c += `\tconst ${v} = ${value};\n`
                 } else {
