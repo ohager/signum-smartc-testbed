@@ -1,6 +1,6 @@
 {
   "name": "signum-smartc-testbed",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A testbed for faster smart contract development with SmartC for Signum blockchain platform",
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
@@ -21,7 +21,9 @@
     "blockchain",
     "smartcontracts",
     "web3",
-    "clang"
+    "smartc",
+    "clang",
+    "c"
   ],
   "author": "ohager",
   "license": "Apache-2.0",
@@ -30,6 +32,7 @@
   },
   "homepage": "https://github.com/ohager/signum-smartc-testbed#readme",
   "dependencies": {
+    "eta": "^3.1.1",
     "smartc-signum-simulator": "file:smartc-signum-simulator-2.0.0.tgz"
   },
   "devDependencies": {
