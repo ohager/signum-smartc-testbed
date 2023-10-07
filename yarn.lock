@@ -452,11 +452,6 @@ esbuild@^0.18.10:
     "@esbuild/win32-ia32" "0.18.20"
     "@esbuild/win32-x64" "0.18.20"
 
-eta@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/eta/-/eta-3.1.1.tgz#f96574befd26cff585081954bec24b1ed7ec4853"
-  integrity sha512-GVKq8BhYjvGiwKAnvPOnTwAHach3uHglvW0nG9gjEmo8ZIe8HR1aCLdQ97jlxXPcCWhB6E3rDWOk2fahFKG5Cw==
-
 eventemitter3@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
@@ -849,21 +844,16 @@ slice-ansi@^5.0.0:
     ansi-styles "^6.0.0"
     is-fullwidth-code-point "^4.0.0"
 
-smartc-assembly-highlight@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/smartc-assembly-highlight/-/smartc-assembly-highlight-1.1.1.tgz#10fb15a821e9ac457c98fa1066dad18ee2aef45e"
-  integrity sha512-endEAL4jiGI6o5C2TwYakiqRESh9CQiFe65ddVhcOa7fI2ouM0Wgc/qrnaliCSPVMw5KQzfK+Fq6pWcwbg99wA==
-
 smartc-signum-compiler@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/smartc-signum-compiler/-/smartc-signum-compiler-2.1.1.tgz#76a5e660f2bdd4d705872511638d60fe8d1c352f"
   integrity sha512-kRdDyoHndTNUTjpSX2t4G1QiTICoJlvKExuaDaOytvpLl0vO29SBaMO4PIjFLHAmm6ZE+JL98/t5UE0JGv3sEw==
 
-"smartc-signum-simulator@file:smartc-signum-simulator-2.0.0.tgz":
+smartc-signum-simulator@^2.0.0:
   version "2.0.0"
-  resolved "file:smartc-signum-simulator-2.0.0.tgz#1f275247137122207fde5d66fc2a413afa6c03cd"
+  resolved "https://registry.yarnpkg.com/smartc-signum-simulator/-/smartc-signum-simulator-2.0.0.tgz#558c8e064f5cbc70c0b140245ca697c1b9553535"
+  integrity sha512-YwkfexuG74PNoSy1MBtHn8bQ7jmnQmplpOM9OdWI9cTjaEcKZlG6iM7xLsXaH/6dQutDj52+QHbuRXfZdhGvPA==
   dependencies:
-    smartc-assembly-highlight "^1.1.1"
     smartc-signum-compiler "^2.1.1"
 
 source-map-js@^1.0.2:
