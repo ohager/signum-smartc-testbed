@@ -19,6 +19,18 @@ and develop faster more complex scenarios without being victim of testing fatigu
 
 **☢️ Use at your own risk ☢️**
 
+## Quick Start
+
+Use the [Public Project Template](https://github.com/ohager/signum-smartc-testbed-starter) or create your local starter project(*):
+
+1. `npx tiged git@github.com:ohager/signum-smartc-testbed-starter.git <your-project-folder>`
+2. `npm install`
+3. `npm test`
+
+If no error occurs you can start developing your own contract!
+
+> (*) requires NodeJS18+ installed
+
 ## How to use?
 
 Use the testbed as a programmable testing environment. Use it together with test runner like [Jest](https://jestjs.io/) or [Vitest](https://vitest.dev/) (recommended)
@@ -92,9 +104,11 @@ describe("Stock Contract - Change Usage Fee", () => {
 
 Look at [API Documentation](https://ohager.github.io/signum-smartc-testbed/index.html) for details.
 
+
+
 ## ROADMAP
 
-- [ ] Github Starter Template
+- [x] Github Starter Template
 - [ ] Unit Tests
 - [x] Externalize Utility Functions, e.g. method args conversion
 - [ ] Stable MultiSlot Support
