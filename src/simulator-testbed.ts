@@ -1,26 +1,12 @@
 import {
-  Blockchain,
-  loadSmartContract,
-  Simulator,
-  reset,
-  Contracts,
   MemoryObj,
-  UserTransactionObj,
+  TransactionObj,
   MapObj,
   AccountObj,
   BlockchainTransactionObj,
+  SimNode,
 } from "smartc-signum-simulator";
 import { readFileSync } from "fs";
-
-interface TestbedContext {
-  simulator: typeof Simulator;
-  blockchain: typeof Blockchain;
-  contracts: typeof Contracts;
-}
-
-export type SimulatorType = typeof Simulator;
-export type BlockchainType = typeof Blockchain;
-export type ContractsType = typeof Contracts;
 
 /**
  * Simulator Testbed Class
@@ -29,7 +15,7 @@ export type ContractsType = typeof Contracts;
  *
  * @example
  * ```ts
- * const Scenario1: UserTransactionObj[] = [
+ * const Scenario1: TransactionObj[] = [
  *   {
  *     blockheight: 1,
  *     amount: 6_0000_0000n,
@@ -47,20 +33,20 @@ export type ContractsType = typeof Contracts;
  *
  * const ContractPath = join(__dirname + './contract.smart.c')
  *
- * const testbed = SimulatorTestbed
- *     .loadContract(ContractPath)
- *     .runScenario(Scenario1);
+ * const Testbed = new SimulatorTestbed()
+ * Testbed.loadContract(ContractPath)
+ *        .runScenario(Scenario1);
  *
- *  const bc = testbed.blockchain;
+ *  const bc = Testbed.Node.Blockchain;
  *  const tx = bc.transactions;
- *  const maps = testbed.getMapsPerSlot().filter(({k1, k2, value}) => ...)
+ *  const maps = testbed.getContractMaps().filter(({k1, k2, value}) => ...)
  * ```
  *
  * __INITIALIZE CONTRACT__
  *
  * To initialize variables in the contract you can use the `initializer` parameter when loading the contract.
  *
- * To apply initialization a code injection is needed and requires the developer to paste an "Injection Snippet" in the
+ * To apply initialization a code injection is needed and requires the developer to use defines preprended with TESTBED_
  * source code, i.e.
  *
  * ```c
@@ -68,9 +54,13 @@ export type ContractsType = typeof Contracts;
  * // a good practice to have them declared as first variables in your contract
  * long var1, var2, var3;
  *
- * // The injection snippet for the Testbed
- * //<TESTBED_INIT:var1,var2,var3>
+ * // Define values if not running on testbed (i.e. in web based simulator)
+ * #ifndef TESTBED
+ *  #define TESTBED_value1 10
+ * #endif
  *
+ * // This way your variable can be tested with different values easily in testbed
+ * const var1 = TESTBED_value1
  * ```
  *
  *
@@ -80,37 +70,35 @@ export type ContractsType = typeof Contracts;
  *
  * const testbed = SimulatorTestbed
  *     .loadContract(ContractPath, {
- *           var1: "Text",
- *           var2: 1,
- *           var3: 100n
+ *           value1: "Text",
+ *           value2: 1,
+ *           value3: 100n
  *           }
  *     ).runScenario(Scenario1);
  * ```
  * When the given Injection Snippet is given it will be replaced by the following code:
- *
- * ```c
- * #define TESTBED 1
- * #ifdef TESTBED
- *     const var1 = "Text";
- *     const var2 = 1;
- *     const var3 = 100;
- * #endif
- * ```
  *
  * This testbed loads a SmartC Contract and a scenario (set of transactions) and forges all necessary blocks.
  * It's possible to inspect all the results, i.e. transactions, kkv-maps, accounts, in-memory variables, and test them against
  * expected result sets. This class is meant to be used with Test Runners like [Vitest](https://vitest.dev/) or [Jest](https://jestjs.io/).
  */
 export class SimulatorTestbed {
-  private constructor(private context: TestbedContext) {}
+  Node: SimNode;
+  constructor(scenario?: TransactionObj[]) {
+    this.Node = new SimNode();
+    if (scenario) {
+      const status = this.Node.appendScenario(
+        this.toSimulatorTransactions(scenario),
+      );
+      if (status.errorCode) {
+        throw new Error(
+          "Appending transactions returned error: " + status.errorDescription,
+        );
+      }
+    }
+  }
 
-  /**
-   * Converts an array of `UserTransactionObj` objects into a JSON string that can be used in side the [Simulator UI](https://deleterium.info/sc-simulator/)
-   *
-   * @param {UserTransactionObj[]} scenario - The array of `UserTransactionObj` objects to be converted.
-   * @return {string} - The JSON string representation of the `scenario` array.
-   */
-  static toSimulatorTransactions(scenario: UserTransactionObj[]): string {
+  private toSimulatorTransactions(scenario: TransactionObj[]): string {
     return JSON.stringify(
       scenario,
       (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
@@ -121,104 +109,37 @@ export class SimulatorTestbed {
    * Loads a contract from the specified code path and eventually initializes the contract with the provided initializers
    *
    * @param {string} codePath - The path to the SmartC code file.
-   * @param initializers - The initializer object for the contract - to use with `//<TESTBED_INIT:var1,var2,var3>` snippet
+   * @param initializers - The initializer object for the contract - Initialization is prepended.
    * @return {SimulatorTestbed} The simulator testbed with the loaded contract.
    */
-  static loadContract(
+  public loadContract(
     codePath: string,
     initializers?: Record<string, number | string | bigint>,
   ) {
-    reset();
     let code = readFileSync(codePath, "utf8");
     if (initializers) {
-      code = SimulatorTestbed.injectInitializerCode(code, initializers);
+      code = this.injectInitializerCode(code, initializers);
     }
-    return new SimulatorTestbed({
-      simulator: loadSmartContract(code),
-      blockchain: Blockchain,
-      contracts: Contracts,
-    });
+    this.Node.loadSmartContract(code, 555n);
+    return this;
   }
 
-  private static injectInitializerCode(
+  private injectInitializerCode(
     code: string,
     initializers: Record<string, number | string | bigint>,
   ) {
-    const regex = /\/\/\s*?<TESTBED_INIT:(?<vars>.*)>/;
-    const match = regex.exec(code);
-
-    if (match?.groups) {
-      const notFoundInitializers = new Set<string>();
-      const initializableVars = match.groups.vars.split(",");
-
-      const init = initializableVars.reduce((c, v) => {
-        const iv = initializers[v];
-        if (iv !== undefined) {
-          const value = typeof iv === "string" ? `"${iv}"` : iv.toString();
-          c += `\tconst ${v} = ${value};\n`;
-        } else {
-          notFoundInitializers.add(v);
-        }
-        return c;
-      }, "");
-
-      if (notFoundInitializers.size) {
-        console.warn(
-          `On Testbed Initialization: Initializers for [${Array.from(
-            notFoundInitializers,
-          ).join(",")}] not found.`,
-        );
-      }
-      code = code.replace(
-        regex,
-        `
-// smartc-testbed: automatic injection
-#define TESTBED 1
-#ifdef TESTBED
-${init}     
-#endif      
-        `,
-      );
+    let init = "";
+    for (const key in initializers) {
+      init += `#define TESTBED_${key} ${String(initializers[key])}\n`;
     }
-    return code;
-  }
 
-  /**
-   * Get the simulator.
-   *
-   * @return {any} The simulator instance.
-   */
-  get simulator(): typeof Simulator {
-    return this.context.simulator;
-  }
-
-  /**
-   * Get the simulated blockchain instance.
-   *
-   * @return {BlockchainType} the blockchain
-   */
-  get blockchain(): BlockchainType {
-    return this.context.blockchain;
-  }
-
-  /**
-   * Get all contracts.
-   *
-   * @return {ContractsType} the contracts
-   */
-  get contracts(): ContractsType {
-    return this.context.contracts;
-  }
-
-  /**
-   * Retrieves the contract at the specified slot.
-   *
-   * @param {number} slot - The slot number of the contract (default: -1, i.e. current contract).
-   * @return {any} The contract at the specified slot, or current if slot = -1.
-   */
-  getContract(slot = -1) {
-    const s = slot === -1 ? this.simulator.currSlotContract! : slot;
-    return this.context.contracts[s];
+    return `
+// smartc-testbed: automatic injection
+#ifndef TESTBED
+#define TESTBED 1
+${init}
+#endif
+${code}`;
   }
 
   /**
@@ -226,9 +147,11 @@ ${init}
    *
    * @param {number} slot - The slot number of the contract to select. Will be at maximum the number of contracts. (no overflow possible)
    */
-  selectCurrentContract(slot: number) {
-    this.simulator.currSlotContract = Math.min(slot, this.contracts.length - 1);
-    this.getContract();
+  selectContract(address: bigint) {
+    if (!this.Node.Simulator.setCurrentSlotContract(address)) {
+      throw new Error("Invalid contract address.");
+    }
+    return this;
   }
 
   /**
@@ -237,11 +160,17 @@ ${init}
    * @param {number} slot - The slot number (default: 0).
    * @return {any} The maps per slot.
    */
-  getMapsPerSlot(slot: number = 0): MapObj[] {
-    if (slot > this.blockchain.maps.length - 1) {
-      throw new Error("Invalid slot index");
+  getContractMap(address?: bigint): MapObj[] {
+    if (!address) {
+      address = this.Node.Simulator.CurrentContract?.contract;
     }
-    return this.blockchain.maps[slot].map;
+    if (!address) {
+      throw new Error("Contract not specified");
+    }
+    const BlockchainMap = this.Node.Blockchain.maps.find(
+      (M) => M.id === address,
+    );
+    return BlockchainMap?.map ?? [];
   }
 
   /**
@@ -252,8 +181,9 @@ ${init}
    * @param {number} slot - The slot number (default: 0).
    * @return {bigint} The value or `0` if not exists.
    */
-  getMapValuePerSlot(key1: bigint, key2: bigint, slot: number = 0): bigint {
-    const foundValue = this.getMapsPerSlot(slot).find(
+  getContractMapValue(key1: bigint, key2: bigint, address?: bigint): bigint {
+    const contractMap = this.getContractMap(address);
+    const foundValue = contractMap.find(
       ({ k1, k2 }) => k1 === key1 && k2 === key2,
     );
     return foundValue ? foundValue.value : 0n;
@@ -266,9 +196,9 @@ ${init}
    * @param {number} slot - The slot number (default: 0).
    * @return {bigint} The value or `0` if not exists.
    */
-  getMapValuesPerSlot(key1: bigint, slot: number = 0): MapObj[] {
+  getContractMapValues(key1: bigint, address?: bigint): MapObj[] {
     let result: MapObj[] = [];
-    for (let mapObjs of this.getMapsPerSlot(slot)) {
+    for (let mapObjs of this.getContractMap(address)) {
       if (mapObjs.k1 === key1) {
         result.push(mapObjs);
       }
@@ -284,7 +214,7 @@ ${init}
    * @return {AccountObj | undefined} The account with the specified ID, or undefined if no account is found.
    */
   getAccount(accountId: bigint): AccountObj | undefined {
-    return this.blockchain.accounts.find((a) => a.id === accountId);
+    return this.Node.Blockchain.accounts.find((a) => a.id === accountId);
   }
 
   /**
@@ -293,7 +223,7 @@ ${init}
    * @return {BlockchainTransactionObj[]} - An array of BlockchainTransactionObj objects.
    */
   getTransactions(): BlockchainTransactionObj[] {
-    return this.blockchain.transactions;
+    return this.Node.Blockchain.transactions;
   }
 
   /**
@@ -302,15 +232,24 @@ ${init}
    * @param {UserTransactionObj[]} scenario - The array of user transactions representing the scenario.
    * @return {this} - Returns the current instance of the class.
    */
-  runScenario(scenario: UserTransactionObj[]) {
-    const scenarioStr = SimulatorTestbed.toSimulatorTransactions(scenario);
-    const lastScenarioBlock = scenario.reduce(
-      (p, c) => Math.max(c.blockheight, p),
+  runScenario(scenario: TransactionObj[] = []) {
+    const scenarioStr = this.toSimulatorTransactions(scenario);
+    const status = this.Node.appendScenario(scenarioStr);
+    if (status.errorCode) {
+      throw new Error(
+        "Appending transactions returned error: " + status.errorDescription,
+      );
+    }
+    const lastScenarioBlock = this.Node.scenarioTransactions.reduce(
+      (p, c) => Math.max(c.blockheight ?? 0, p),
       0,
     );
-    for (let i = 0; i < lastScenarioBlock + 1; i++) {
-      console.debug(this.simulator.forgeBlock(scenarioStr));
-      this.simulator.runSlotContract();
+    for (
+      let i = this.Node.Blockchain.currentBlock;
+      i < lastScenarioBlock + 2;
+      i++
+    ) {
+      console.debug(`Block ${this.Node.forgeBlock()} forged`);
     }
 
     return this;
@@ -322,9 +261,14 @@ ${init}
    * @param {number} slot - The slot number to retrieve the memory from. If not specified, the current slot's contract memory will be returned.
    * @return {MemoryObj[]} An array of MemoryObj representing the contract memory.
    */
-  getContractMemory(slot = -1): MemoryObj[] {
-    const s = slot === -1 ? this.simulator.currSlotContract! : slot;
-    return this.getContract(s).Memory;
+  getContractMemory(address?: bigint): MemoryObj[] {
+    if (address) {
+      this.Node.Simulator.setCurrentSlotContract(address);
+    }
+    if (!this.Node.Simulator.CurrentContract) {
+      throw new Error("Invalid contract address");
+    }
+    return this.Node.Simulator.CurrentContract.Memory;
   }
 
   /**
@@ -334,9 +278,14 @@ ${init}
    * @param {number} [slot=-1] - The slot number of the contract memory. Defaults to -1, i.e. current selected contract
    * @return {bigint} - The value of the variable if found, otherwise null.
    */
-  getContractMemoryValue(name: string, slot = -1) {
-    const mem = this.getContractMemory(slot);
-    for (let v of mem) {
+  getContractMemoryValue(name: string, address?: bigint) {
+    if (address) {
+      this.Node.Simulator.setCurrentSlotContract(address);
+    }
+    if (!this.Node.Simulator.CurrentContract) {
+      throw new Error("Invalid contract address");
+    }
+    for (let v of this.Node.Simulator.CurrentContract.Memory) {
       if (v.varName === name) {
         return v.value;
       }
