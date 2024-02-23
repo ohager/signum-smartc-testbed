@@ -7,6 +7,7 @@ import {
   SimNode,
 } from "smartc-signum-simulator";
 import { readFileSync } from "fs";
+import { CONTRACT } from "smartc-signum-simulator/dist/contract";
 
 /**
  * Simulator Testbed Class
@@ -87,7 +88,7 @@ export class SimulatorTestbed {
   constructor(scenario?: TransactionObj[]) {
     this.Node = new SimNode();
     if (scenario) {
-      const status = this.Node.appendScenario(
+      const status = this.Node.setScenario(
         this.toSimulatorTransactions(scenario),
       );
       if (status.errorCode) {
@@ -143,9 +144,9 @@ ${code}`;
   }
 
   /**
-   * Updates the current contract to the contract at the specified slot.
+   * Updates the current contract to the contract at the specified address.
    *
-   * @param {number} slot - The slot number of the contract to select. Will be at maximum the number of contracts. (no overflow possible)
+   * @param {bigint} address - The contract address to select. Throws error if contract is not found.
    */
   selectContract(address: bigint) {
     if (!this.Node.Simulator.setCurrentSlotContract(address)) {
@@ -155,9 +156,9 @@ ${code}`;
   }
 
   /**
-   * Retrieves the maps per slot.
+   * Retrieves the maps per contract.
    *
-   * @param {number} slot - The slot number (default: 0).
+   * @param {bigint} address - The contract address (default: the last deployed).
    * @return {any} The maps per slot.
    */
   getContractMap(address?: bigint): MapObj[] {
@@ -178,7 +179,7 @@ ${code}`;
    *
    * @param key1 1st Key
    * @param key2 2nd Key
-   * @param {number} slot - The slot number (default: 0).
+   * @param {bigint} address - The contract address (default: the last deployed).
    * @return {bigint} The value or `0` if not exists.
    */
   getContractMapValue(key1: bigint, key2: bigint, address?: bigint): bigint {
@@ -193,7 +194,7 @@ ${code}`;
    * Retrieves a list of (key-value)-tuples from a map per slot.
    *
    * @param key1 1st Key
-   * @param {number} slot - The slot number (default: 0).
+   * @param {bigint} address - The contract address (default: the last deployed).
    * @return {bigint} The value or `0` if not exists.
    */
   getContractMapValues(key1: bigint, address?: bigint): MapObj[] {
@@ -203,7 +204,6 @@ ${code}`;
         result.push(mapObjs);
       }
     }
-
     return result;
   }
 
@@ -229,7 +229,7 @@ ${code}`;
   /**
    * Runs a scenario by simulating a series of user transactions.
    *
-   * @param {UserTransactionObj[]} scenario - The array of user transactions representing the scenario.
+   * @param {TransactionObj[]} scenario - The array of user transactions representing the scenario.
    * @return {this} - Returns the current instance of the class.
    */
   runScenario(scenario: TransactionObj[] = []) {
@@ -244,52 +244,105 @@ ${code}`;
       (p, c) => Math.max(c.blockheight ?? 0, p),
       0,
     );
-    for (
-      let i = this.Node.Blockchain.currentBlock;
-      i < lastScenarioBlock + 2;
-      i++
-    ) {
-      console.debug(`Block ${this.Node.forgeBlock()} forged`);
-    }
-
+    this.Node.forgeUntilBlock(lastScenarioBlock + 2);
+    console.debug(`Blocks forged until height ${this.Node.forgeBlock()}.`);
     return this;
+  }
+
+  /**
+   * Retrieves a given contract by address.
+   *
+   * @param {bigint} address - The contract address (default: the last deployed).
+   * @return {CONTRACT} The contract.
+   * @throws Error if invalid contract
+   */
+  getContract(address?: bigint): CONTRACT {
+    if (!address) {
+      const contract = this.Node.Simulator.getCurrentSlotContract();
+      if (!contract) {
+        throw new Error("Invalid contract address");
+      }
+      return contract;
+    }
+    const SC = this.Node.Blockchain.Contracts.find(
+      (sc) => sc.contract === address,
+    );
+    if (!SC) {
+      throw new Error("Invalid contract address");
+    }
+    return SC;
   }
 
   /**
    * Retrieves the contract memory for a given slot.
    *
-   * @param {number} slot - The slot number to retrieve the memory from. If not specified, the current slot's contract memory will be returned.
+   * @param {bigint} address - The contract address (default: the last deployed).
    * @return {MemoryObj[]} An array of MemoryObj representing the contract memory.
    */
   getContractMemory(address?: bigint): MemoryObj[] {
-    if (address) {
-      this.Node.Simulator.setCurrentSlotContract(address);
-    }
-    if (!this.Node.Simulator.CurrentContract) {
-      throw new Error("Invalid contract address");
-    }
-    return this.Node.Simulator.CurrentContract.Memory;
+    return this.getContract(address).Memory;
   }
 
   /**
    * Retrieves the value of a contract memory variable by name, e.g. `myvalue` or inside a function `func_myvalue`
    *
    * @param {string} name - The name of the variable to retrieve.
-   * @param {number} [slot=-1] - The slot number of the contract memory. Defaults to -1, i.e. current selected contract
+   * @param {bigint} address - The contract address (default: the last deployed).
    * @return {bigint} - The value of the variable if found, otherwise null.
    */
   getContractMemoryValue(name: string, address?: bigint) {
-    if (address) {
-      this.Node.Simulator.setCurrentSlotContract(address);
-    }
-    if (!this.Node.Simulator.CurrentContract) {
-      throw new Error("Invalid contract address");
-    }
-    for (let v of this.Node.Simulator.CurrentContract.Memory) {
+    for (let v of this.getContract(address).Memory) {
       if (v.varName === name) {
         return v.value;
       }
     }
     return null;
+  }
+
+  /**
+   * Retrieves all the transactions sent by the contract at a given height.
+   * Nice to get contract responses.
+   *
+   * @param {number} blockheight - The blockheight of transactions to fetch.
+   * @param {bigint} address - The contract address (default: the last deployed).
+   * @return {MemoryObj[]} An array of MemoryObj representing the contract memory.
+   */
+  getTransactionsSentByContract(
+    blockheight: number,
+    address?: bigint,
+  ): BlockchainTransactionObj[] {
+    const contract = this.getContract(address);
+    return this.Node.Blockchain.transactions.filter(
+      (tx) => tx.blockheight === blockheight && tx.sender === contract.contract,
+    );
+  }
+
+  /**
+   * Sends the argument transactions at the next blockheight and returns all
+   * transactions from the selected contract in the subsequent height.
+   * Input transactions are modified to match blockheight and contract address.
+   * This method forges two blocks in order to get the response.
+   *
+   * @param {TransactionObj[]} TXs - Transactions to send.
+   * @param {bigint} address - The target contract address (default: the last deployed).
+   * @return {any} An array of transactions, or empty array if no one was found.
+   */
+  sendTransactionAndGetResponse(
+    TXs: TransactionObj[],
+    address?: bigint,
+  ): BlockchainTransactionObj[] {
+    const contract = this.getContract(address);
+    TXs.forEach((tx) => {
+      tx.blockheight = this.Node.Blockchain.getCurrentBlock() + 1;
+      tx.recipient = contract.contract;
+    });
+    const status = this.Node.appendScenario(this.toSimulatorTransactions(TXs));
+    if (status.errorCode) {
+      throw new Error(
+        "Appending transactions returned error: " + status.errorDescription,
+      );
+    }
+    const height = this.Node.forgeBlocks(2);
+    return this.getTransactionsSentByContract(height);
   }
 }
