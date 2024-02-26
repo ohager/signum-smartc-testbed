@@ -106,12 +106,7 @@ export class SimulatorTestbed {
     }
   }
 
-  /**
-   * Converts a scenario into a Simulator UI compatible string
-   * @param scenario Scenario Object
-   * @return string
-   */
-  public static toSimulatorTransactions(scenario: TransactionObj[]): string {
+  private static toSimulatorTransactions(scenario: TransactionObj[]): string {
     return JSON.stringify(
       scenario,
       (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
