@@ -5,9 +5,11 @@ import {
   AccountObj,
   BlockchainTransactionObj,
   SimNode,
+  CONTRACT,
 } from "smartc-signum-simulator";
 import { readFileSync } from "fs";
-import { CONTRACT } from "smartc-signum-simulator/dist/contract";
+
+type Contract = CONTRACT;
 
 /**
  * Simulator Testbed Class
@@ -47,7 +49,7 @@ import { CONTRACT } from "smartc-signum-simulator/dist/contract";
  *
  * To initialize variables in the contract you can use the `initializer` parameter when loading the contract.
  *
- * To apply initialization a code injection is needed and requires the developer to use defines preprended with TESTBED_
+ * To apply initialization a code injection is needed and requires the developer to use defines pre-pended with TESTBED_
  * source code, i.e.
  *
  * ```c
@@ -253,10 +255,10 @@ ${code}`;
    * Retrieves a given contract by address.
    *
    * @param {bigint} address - The contract address (default: the last deployed).
-   * @return {CONTRACT} The contract.
+   * @return {Contract} The contract.
    * @throws Error if invalid contract
    */
-  getContract(address?: bigint): CONTRACT {
+  getContract(address?: bigint): Contract {
     if (!address) {
       const contract = this.Node.Simulator.getCurrentSlotContract();
       if (!contract) {
@@ -264,13 +266,13 @@ ${code}`;
       }
       return contract;
     }
-    const SC = this.Node.Blockchain.Contracts.find(
+    const contract = this.Node.Blockchain.Contracts.find(
       (sc) => sc.contract === address,
     );
-    if (!SC) {
+    if (!contract) {
       throw new Error("Invalid contract address");
     }
-    return SC;
+    return contract;
   }
 
   /**
