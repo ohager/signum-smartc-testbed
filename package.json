@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/ohager/signum-smartc-testbed#readme",
   "dependencies": {
-    "smartc-signum-simulator": "^2.0.0"
+    "smartc-signum-simulator": "^3.0.1"
   },
   "devDependencies": {
     "husky": "^8.0.0",
