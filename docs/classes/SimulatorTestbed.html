@@ -20,20 +20,18 @@
 <p>Use this class to run scenarios against the simulator.</p>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">Scenario1</span><span class="hl-0">: </span><span class="hl-8">UserTransactionObj</span><span class="hl-0">[] = [</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">blockheight:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">amount:</span><span class="hl-0"> </span><span class="hl-2">6_0000_0000</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">sender:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">recipient:</span><span class="hl-0"> </span><span class="hl-2">2</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">blockheight:</span><span class="hl-0"> </span><span class="hl-2">3</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">amount:</span><span class="hl-0"> </span><span class="hl-2">5000_0000</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">sender:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">recipient:</span><span class="hl-0"> </span><span class="hl-2">2</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-7">// ...</span><br/><span class="hl-0">]</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">ContractPath</span><span class="hl-0"> = </span><span class="hl-4">join</span><span class="hl-0">(</span><span class="hl-1">__dirname</span><span class="hl-0"> + </span><span class="hl-5">&#39;./contract.smart.c&#39;</span><span class="hl-0">)</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">testbed</span><span class="hl-0"> = </span><span class="hl-1">SimulatorTestbed</span><br/><span class="hl-0">    .</span><span class="hl-4">loadContract</span><span class="hl-0">(</span><span class="hl-1">ContractPath</span><span class="hl-0">)</span><br/><span class="hl-0">    .</span><span class="hl-4">runScenario</span><span class="hl-0">(</span><span class="hl-1">Scenario1</span><span class="hl-0">);</span><br/><br/><span class="hl-0"> </span><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">bc</span><span class="hl-0"> = </span><span class="hl-1">testbed</span><span class="hl-0">.</span><span class="hl-1">blockchain</span><span class="hl-0">;</span><br/><span class="hl-0"> </span><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">tx</span><span class="hl-0"> = </span><span class="hl-1">bc</span><span class="hl-0">.</span><span class="hl-1">transactions</span><span class="hl-0">;</span><br/><span class="hl-0"> </span><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">maps</span><span class="hl-0"> = </span><span class="hl-1">testbed</span><span class="hl-0">.</span><span class="hl-4">getMapsPerSlot</span><span class="hl-0">().</span><span class="hl-4">filter</span><span class="hl-0">(({</span><span class="hl-1">k1</span><span class="hl-0">, </span><span class="hl-1">k2</span><span class="hl-0">, </span><span class="hl-1">value</span><span class="hl-0">}) </span><span class="hl-6">=&gt;</span><span class="hl-0"> ...)</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">Scenario1</span><span class="hl-0">: </span><span class="hl-8">TransactionObj</span><span class="hl-0">[] = [</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">blockheight:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">amount:</span><span class="hl-0"> </span><span class="hl-2">6_0000_0000</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">sender:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">recipient:</span><span class="hl-0"> </span><span class="hl-2">2</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  {</span><br/><span class="hl-0">    </span><span class="hl-1">blockheight:</span><span class="hl-0"> </span><span class="hl-2">3</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">amount:</span><span class="hl-0"> </span><span class="hl-2">5000_0000</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">sender:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">recipient:</span><span class="hl-0"> </span><span class="hl-2">2</span><span class="hl-6">n</span><span class="hl-0">,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-7">// ...</span><br/><span class="hl-0">]</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">ContractPath</span><span class="hl-0"> = </span><span class="hl-4">join</span><span class="hl-0">(</span><span class="hl-1">__dirname</span><span class="hl-0"> + </span><span class="hl-5">&#39;./contract.smart.c&#39;</span><span class="hl-0">)</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">Testbed</span><span class="hl-0"> = </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-4">SimulatorTestbed</span><span class="hl-0">()</span><br/><span class="hl-1">Testbed</span><span class="hl-0">.</span><span class="hl-4">loadContract</span><span class="hl-0">(</span><span class="hl-1">ContractPath</span><span class="hl-0">)</span><br/><span class="hl-0">       .</span><span class="hl-4">runScenario</span><span class="hl-0">(</span><span class="hl-1">Scenario1</span><span class="hl-0">);</span><br/><br/><span class="hl-0"> </span><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">bc</span><span class="hl-0"> = </span><span class="hl-1">Testbed</span><span class="hl-0">.</span><span class="hl-1">Node</span><span class="hl-0">.</span><span class="hl-1">Blockchain</span><span class="hl-0">;</span><br/><span class="hl-0"> </span><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">tx</span><span class="hl-0"> = </span><span class="hl-1">bc</span><span class="hl-0">.</span><span class="hl-1">transactions</span><span class="hl-0">;</span><br/><span class="hl-0"> </span><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">maps</span><span class="hl-0"> = </span><span class="hl-1">testbed</span><span class="hl-0">.</span><span class="hl-4">getContractMaps</span><span class="hl-0">().</span><span class="hl-4">filter</span><span class="hl-0">(({</span><span class="hl-1">k1</span><span class="hl-0">, </span><span class="hl-1">k2</span><span class="hl-0">, </span><span class="hl-1">value</span><span class="hl-0">}) </span><span class="hl-6">=&gt;</span><span class="hl-0"> ...)</span>
 </code><button>Copy</button></pre>
 <p><strong>INITIALIZE CONTRACT</strong></p>
 <p>To initialize variables in the contract you can use the <code>initializer</code> parameter when loading the contract.</p>
-<p>To apply initialization a code injection is needed and requires the developer to paste an &quot;Injection Snippet&quot; in the
+<p>To apply initialization a code injection is needed and requires the developer to use defines pre-pended with TESTBED_
 source code, i.e.</p>
-<pre><code class="language-c"><span class="hl-7">// initializable variables</span><br/><span class="hl-7">// a good practice to have them declared as first variables in your contract</span><br/><span class="hl-6">long</span><span class="hl-0"> var1, var2, var3;</span><br/><br/><span class="hl-7">// The injection snippet for the Testbed</span><br/><span class="hl-7">//&lt;TESTBED_INIT:var1,var2,var3&gt;</span><br/>
+<pre><code class="language-c"><span class="hl-7">// initializable variables</span><br/><span class="hl-7">// a good practice to have them declared as first variables in your contract</span><br/><span class="hl-6">long</span><span class="hl-0"> var1, var2, var3;</span><br/><br/><span class="hl-7">// Define values if not running on testbed (i.e. in web based simulator)</span><br/><span class="hl-9">#ifndef</span><span class="hl-6"> TESTBED</span><br/><span class="hl-6"> </span><span class="hl-9">#define</span><span class="hl-6"> TESTBED_value1 </span><span class="hl-2">10</span><br/><span class="hl-9">#endif</span><br/><br/><span class="hl-7">// This way your variable can be tested with different values easily in testbed</span><br/><span class="hl-6">const</span><span class="hl-0"> var1 = TESTBED_value1</span>
 </code><button>Copy</button></pre>
 <p>You may load the contract into the testbed as follows:</p>
-<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">ContractPath</span><span class="hl-0"> = </span><span class="hl-4">join</span><span class="hl-0">(</span><span class="hl-1">__dirname</span><span class="hl-0"> + </span><span class="hl-5">&#39;./contract.smart.c&#39;</span><span class="hl-0">)</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">testbed</span><span class="hl-0"> = </span><span class="hl-1">SimulatorTestbed</span><br/><span class="hl-0">    .</span><span class="hl-4">loadContract</span><span class="hl-0">(</span><span class="hl-1">ContractPath</span><span class="hl-0">, {</span><br/><span class="hl-0">          </span><span class="hl-1">var1:</span><span class="hl-0"> </span><span class="hl-5">&quot;Text&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">          </span><span class="hl-1">var2:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-0">,</span><br/><span class="hl-0">          </span><span class="hl-1">var3:</span><span class="hl-0"> </span><span class="hl-2">100</span><span class="hl-6">n</span><br/><span class="hl-0">          }</span><br/><span class="hl-0">    ).</span><span class="hl-4">runScenario</span><span class="hl-0">(</span><span class="hl-1">Scenario1</span><span class="hl-0">);</span>
+<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">ContractPath</span><span class="hl-0"> = </span><span class="hl-4">join</span><span class="hl-0">(</span><span class="hl-1">__dirname</span><span class="hl-0"> + </span><span class="hl-5">&#39;./contract.smart.c&#39;</span><span class="hl-0">)</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-3">testbed</span><span class="hl-0"> = </span><span class="hl-1">SimulatorTestbed</span><br/><span class="hl-0">    .</span><span class="hl-4">loadContract</span><span class="hl-0">(</span><span class="hl-1">ContractPath</span><span class="hl-0">, {</span><br/><span class="hl-0">          </span><span class="hl-1">value1:</span><span class="hl-0"> </span><span class="hl-5">&quot;Text&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">          </span><span class="hl-1">value2:</span><span class="hl-0"> </span><span class="hl-2">1</span><span class="hl-0">,</span><br/><span class="hl-0">          </span><span class="hl-1">value3:</span><span class="hl-0"> </span><span class="hl-2">100</span><span class="hl-6">n</span><br/><span class="hl-0">          }</span><br/><span class="hl-0">    ).</span><span class="hl-4">runScenario</span><span class="hl-0">(</span><span class="hl-1">Scenario1</span><span class="hl-0">);</span>
 </code><button>Copy</button></pre>
 <p>When the given Injection Snippet is given it will be replaced by the following code:</p>
-<pre><code class="language-c"><span class="hl-9">#define</span><span class="hl-6"> TESTBED </span><span class="hl-2">1</span><br/><span class="hl-9">#ifdef</span><span class="hl-6"> TESTBED</span><br/><span class="hl-0">    </span><span class="hl-6">const</span><span class="hl-0"> var1 = </span><span class="hl-5">&quot;Text&quot;</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-6">const</span><span class="hl-0"> var2 = </span><span class="hl-2">1</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-6">const</span><span class="hl-0"> var3 = </span><span class="hl-2">100</span><span class="hl-0">;</span><br/><span class="hl-9">#endif</span>
-</code><button>Copy</button></pre>
 <p>This testbed loads a SmartC Contract and a scenario (set of transactions) and forges all necessary blocks.
 It&#39;s possible to inspect all the results, i.e. transactions, kkv-maps, accounts, in-memory variables, and test them against
 expected result sets. This class is meant to be used with Test Runners like <a href="https://vitest.dev/">Vitest</a> or <a href="https://jestjs.io/">Jest</a>.</p>
@@ -43,7 +41,7 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 <ul class="tsd-hierarchy">
 <li><span class="target">SimulatorTestbed</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L104">simulator-testbed.ts:104</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L88">simulator-testbed.ts:88</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -51,94 +49,52 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 <div class="tsd-accordion-details">
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Constructors</h3>
-<div class="tsd-index-list"><a href="SimulatorTestbed.html#constructor" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a>
+<div class="tsd-index-list"><a href="SimulatorTestbed.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Properties</h3>
-<div class="tsd-index-list"><a href="SimulatorTestbed.html#context" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>context</span></a>
-</div></section>
-<section class="tsd-index-section">
-<h3 class="tsd-index-heading">Accessors</h3>
-<div class="tsd-index-list"><a href="SimulatorTestbed.html#blockchain" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>blockchain</span></a>
-<a href="SimulatorTestbed.html#contracts" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>contracts</span></a>
-<a href="SimulatorTestbed.html#simulator" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>simulator</span></a>
+<div class="tsd-index-list"><a href="SimulatorTestbed.html#Node" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>Node</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
 <div class="tsd-index-list"><a href="SimulatorTestbed.html#getAccount" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Account</span></a>
 <a href="SimulatorTestbed.html#getContract" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract</span></a>
+<a href="SimulatorTestbed.html#getContractMap" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Map</span></a>
+<a href="SimulatorTestbed.html#getContractMapValue" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Map<wbr/>Value</span></a>
+<a href="SimulatorTestbed.html#getContractMapValues" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Map<wbr/>Values</span></a>
 <a href="SimulatorTestbed.html#getContractMemory" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Memory</span></a>
 <a href="SimulatorTestbed.html#getContractMemoryValue" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Memory<wbr/>Value</span></a>
-<a href="SimulatorTestbed.html#getMapValuePerSlot" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Map<wbr/>Value<wbr/>Per<wbr/>Slot</span></a>
-<a href="SimulatorTestbed.html#getMapValuesPerSlot" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Map<wbr/>Values<wbr/>Per<wbr/>Slot</span></a>
-<a href="SimulatorTestbed.html#getMapsPerSlot" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Maps<wbr/>Per<wbr/>Slot</span></a>
 <a href="SimulatorTestbed.html#getTransactions" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Transactions</span></a>
-<a href="SimulatorTestbed.html#runScenario" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>run<wbr/>Scenario</span></a>
-<a href="SimulatorTestbed.html#selectCurrentContract" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>select<wbr/>Current<wbr/>Contract</span></a>
+<a href="SimulatorTestbed.html#getTransactionsSentByContract" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Transactions<wbr/>Sent<wbr/>By<wbr/>Contract</span></a>
 <a href="SimulatorTestbed.html#injectInitializerCode" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>inject<wbr/>Initializer<wbr/>Code</span></a>
 <a href="SimulatorTestbed.html#loadContract" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>load<wbr/>Contract</span></a>
-<a href="SimulatorTestbed.html#toSimulatorTransactions" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>to<wbr/>Simulator<wbr/>Transactions</span></a>
+<a href="SimulatorTestbed.html#runScenario" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>run<wbr/>Scenario</span></a>
+<a href="SimulatorTestbed.html#selectContract" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>select<wbr/>Contract</span></a>
+<a href="SimulatorTestbed.html#sendTransactionAndGetResponse" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>send<wbr/>Transaction<wbr/>And<wbr/>Get<wbr/>Response</span></a>
+<a href="SimulatorTestbed.html#toSimulatorTransactions" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>to<wbr/>Simulator<wbr/>Transactions</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
-<section class="tsd-panel tsd-member tsd-is-private"><a id="constructor" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-private">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_SimulatorTestbed"><span class="tsd-kind-constructor-signature">new <wbr/>Simulator<wbr/>Testbed</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">context</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a><a href="#constructor.new_SimulatorTestbed" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<section class="tsd-panel tsd-member"><a id="constructor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_SimulatorTestbed"><span class="tsd-kind-constructor-signature">new <wbr/>Simulator<wbr/>Testbed</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">scenario</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a><a href="#constructor.new_SimulatorTestbed" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">context</span>: <a href="../interfaces/_internal_.TestbedContext.html" class="tsd-signature-type tsd-kind-interface">TestbedContext</a></h5></li></ul></div>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">scenario</span>: <span class="tsd-signature-type ">TransactionObj</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L105">simulator-testbed.ts:105</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L90">simulator-testbed.ts:90</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
-<section class="tsd-panel tsd-member tsd-is-private"><a id="context" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>context</span><a href="#context" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">context</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/_internal_.TestbedContext.html" class="tsd-signature-type tsd-kind-interface">TestbedContext</a></div><aside class="tsd-sources">
+<section class="tsd-panel tsd-member"><a id="Node" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>Node</span><a href="#Node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">Node</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">SimNode</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L105">simulator-testbed.ts:105</a></li></ul></aside></section></section>
-<section class="tsd-panel-group tsd-member-group">
-<h2>Accessors</h2>
-<section class="tsd-panel tsd-member"><a id="blockchain" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>blockchain</span><a href="#blockchain" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature" id="blockchain.blockchain-1"><span class="tsd-signature-symbol">get</span> blockchain<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">BLOCKCHAIN</span></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Get the simulated blockchain instance.</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">BLOCKCHAIN</span></h4><p>the blockchain</p>
-
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L200">simulator-testbed.ts:200</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="contracts" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>contracts</span><a href="#contracts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature" id="contracts.contracts-1"><span class="tsd-signature-symbol">get</span> contracts<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">CONTRACT</span><span class="tsd-signature-symbol">[]</span></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Get all contracts.</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">CONTRACT</span><span class="tsd-signature-symbol">[]</span></h4><p>the contracts</p>
-
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L209">simulator-testbed.ts:209</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="simulator" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>simulator</span><a href="#simulator" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature" id="simulator.simulator-1"><span class="tsd-signature-symbol">get</span> simulator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">SIMULATOR</span></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Get the simulator.</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">SIMULATOR</span></h4><p>The simulator instance.</p>
-
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L191">simulator-testbed.ts:191</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L89">simulator-testbed.ts:89</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="getAccount" class="tsd-anchor"></a>
@@ -160,78 +116,53 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L286">simulator-testbed.ts:286</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L218">simulator-testbed.ts:218</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getContract" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Contract</span><a href="#getContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getContract.getContract-1"><span class="tsd-kind-call-signature">get<wbr/>Contract</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">CONTRACT</span><a href="#getContract.getContract-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getContract.getContract-1"><span class="tsd-kind-call-signature">get<wbr/>Contract</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">CONTRACT</span><a href="#getContract.getContract-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Retrieves the contract at the specified slot.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves a given contract by address.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = -1</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number of the contract (default: -1, i.e. current contract).</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">CONTRACT</span></h4><p>The contract at the specified slot, or current if slot = -1.</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">CONTRACT</span></h4><p>The contract.</p>
 
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography">
+<h4>Throws</h4><p>Error if invalid contract</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L219">simulator-testbed.ts:219</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="getContractMemory" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Memory</span><a href="#getContractMemory" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L261">simulator-testbed.ts:261</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getContractMap" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Map</span><a href="#getContractMap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getContractMemory.getContractMemory-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Memory</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">MemoryObj</span><span class="tsd-signature-symbol">[]</span><a href="#getContractMemory.getContractMemory-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getContractMap.getContractMap-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Map</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span><a href="#getContractMap.getContractMap-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Retrieves the contract memory for a given slot.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the maps per contract.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = -1</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number to retrieve the memory from. If not specified, the current slot&#39;s contract memory will be returned.</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">MemoryObj</span><span class="tsd-signature-symbol">[]</span></h4><p>An array of MemoryObj representing the contract memory.</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span></h4><p>The maps per slot.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L325">simulator-testbed.ts:325</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="getContractMemoryValue" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Memory<wbr/>Value</span><a href="#getContractMemoryValue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L166">simulator-testbed.ts:166</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getContractMapValue" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Map<wbr/>Value</span><a href="#getContractMapValue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getContractMemoryValue.getContractMemoryValue-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Memory<wbr/>Value</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">name</span>, <span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">bigint</span><a href="#getContractMemoryValue.getContractMemoryValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Retrieves the value of a contract memory variable by name, e.g. <code>myvalue</code> or inside a function <code>func_myvalue</code></p>
-</div>
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5><span class="tsd-kind-parameter">name</span>: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The name of the variable to retrieve.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = -1</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number of the contract memory. Defaults to -1, i.e. current selected contract</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">bigint</span></h4><ul>
-<li>The value of the variable if found, otherwise null.</li>
-</ul>
-
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L337">simulator-testbed.ts:337</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="getMapValuePerSlot" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>get<wbr/>Map<wbr/>Value<wbr/>Per<wbr/>Slot</span><a href="#getMapValuePerSlot" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getMapValuePerSlot.getMapValuePerSlot-1"><span class="tsd-kind-call-signature">get<wbr/>Map<wbr/>Value<wbr/>Per<wbr/>Slot</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">key1</span>, <span class="tsd-kind-parameter">key2</span>, <span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">bigint</span><a href="#getMapValuePerSlot.getMapValuePerSlot-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getContractMapValue.getContractMapValue-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Map<wbr/>Value</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">key1</span>, <span class="tsd-kind-parameter">key2</span>, <span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">bigint</span><a href="#getContractMapValue.getContractMapValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Retrieves a value from a map per slot.</p>
 </div>
@@ -249,19 +180,19 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number (default: 0).</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">bigint</span></h4><p>The value or <code>0</code> if not exists.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L255">simulator-testbed.ts:255</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="getMapValuesPerSlot" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>get<wbr/>Map<wbr/>Values<wbr/>Per<wbr/>Slot</span><a href="#getMapValuesPerSlot" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L187">simulator-testbed.ts:187</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getContractMapValues" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Map<wbr/>Values</span><a href="#getContractMapValues" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getMapValuesPerSlot.getMapValuesPerSlot-1"><span class="tsd-kind-call-signature">get<wbr/>Map<wbr/>Values<wbr/>Per<wbr/>Slot</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">key1</span>, <span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span><a href="#getMapValuesPerSlot.getMapValuesPerSlot-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getContractMapValues.getContractMapValues-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Map<wbr/>Values</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">key1</span>, <span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span><a href="#getContractMapValues.getContractMapValues-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Retrieves a list of (key-value)-tuples from a map per slot.</p>
 </div>
@@ -274,35 +205,62 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number (default: 0).</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span></h4><p>The value or <code>0</code> if not exists.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L269">simulator-testbed.ts:269</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="getMapsPerSlot" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>get<wbr/>Maps<wbr/>Per<wbr/>Slot</span><a href="#getMapsPerSlot" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L202">simulator-testbed.ts:202</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getContractMemory" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Memory</span><a href="#getContractMemory" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="getMapsPerSlot.getMapsPerSlot-1"><span class="tsd-kind-call-signature">get<wbr/>Maps<wbr/>Per<wbr/>Slot</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span><a href="#getMapsPerSlot.getMapsPerSlot-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getContractMemory.getContractMemory-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Memory</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">MemoryObj</span><span class="tsd-signature-symbol">[]</span><a href="#getContractMemory.getContractMemory-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Retrieves the maps per slot.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves the contract memory for a given slot.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number (default: 0).</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">MapObj</span><span class="tsd-signature-symbol">[]</span></h4><p>The maps per slot.</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">MemoryObj</span><span class="tsd-signature-symbol">[]</span></h4><p>An array of MemoryObj representing the contract memory.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L240">simulator-testbed.ts:240</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L284">simulator-testbed.ts:284</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getContractMemoryValue" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Contract<wbr/>Memory<wbr/>Value</span><a href="#getContractMemoryValue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="getContractMemoryValue.getContractMemoryValue-1"><span class="tsd-kind-call-signature">get<wbr/>Contract<wbr/>Memory<wbr/>Value</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">name</span>, <span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">bigint</span><a href="#getContractMemoryValue.getContractMemoryValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Retrieves the value of a contract memory variable by name, e.g. <code>myvalue</code> or inside a function <code>func_myvalue</code></p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">name</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The name of the variable to retrieve.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">bigint</span></h4><ul>
+<li>The value of the variable if found, otherwise null.</li>
+</ul>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L295">simulator-testbed.ts:295</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getTransactions" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Transactions</span><a href="#getTransactions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -316,50 +274,35 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L295">simulator-testbed.ts:295</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="runScenario" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>run<wbr/>Scenario</span><a href="#runScenario" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L227">simulator-testbed.ts:227</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="getTransactionsSentByContract" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>get<wbr/>Transactions<wbr/>Sent<wbr/>By<wbr/>Contract</span><a href="#getTransactionsSentByContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="runScenario.runScenario-1"><span class="tsd-kind-call-signature">run<wbr/>Scenario</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">scenario</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a><a href="#runScenario.runScenario-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="getTransactionsSentByContract.getTransactionsSentByContract-1"><span class="tsd-kind-call-signature">get<wbr/>Transactions<wbr/>Sent<wbr/>By<wbr/>Contract</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">blockheight</span>, <span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">BlockchainTransactionObj</span><span class="tsd-signature-symbol">[]</span><a href="#getTransactionsSentByContract.getTransactionsSentByContract-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Runs a scenario by simulating a series of user transactions.</p>
+<div class="tsd-comment tsd-typography"><p>Retrieves all the transactions sent by the contract at a given height.
+Nice to get contract responses.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">scenario</span>: <span class="tsd-signature-type ">UserTransactionObj</span><span class="tsd-signature-symbol">[]</span></h5>
-<div class="tsd-comment tsd-typography"><p>The array of user transactions representing the scenario.</p>
+<h5><span class="tsd-kind-parameter">blockheight</span>: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>The blockheight of transactions to fetch.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address (default: the last deployed).</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a></h4><ul>
-<li>Returns the current instance of the class.</li>
-</ul>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">BlockchainTransactionObj</span><span class="tsd-signature-symbol">[]</span></h4><p>An array of MemoryObj representing the contract memory.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L305">simulator-testbed.ts:305</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="selectCurrentContract" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>select<wbr/>Current<wbr/>Contract</span><a href="#selectCurrentContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="selectCurrentContract.selectCurrentContract-1"><span class="tsd-kind-call-signature">select<wbr/>Current<wbr/>Contract</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">slot</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#selectCurrentContract.selectCurrentContract-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Updates the current contract to the contract at the specified slot.</p>
-</div>
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5><span class="tsd-kind-parameter">slot</span>: <span class="tsd-signature-type">number</span></h5>
-<div class="tsd-comment tsd-typography"><p>The slot number of the contract to select. Will be at maximum the number of contracts. (no overflow possible)</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L229">simulator-testbed.ts:229</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L312">simulator-testbed.ts:312</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="injectInitializerCode" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagPrivate">Private</code> <span>inject<wbr/>Initializer<wbr/>Code</span><a href="#injectInitializerCode" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>inject<wbr/>Initializer<wbr/>Code</span><a href="#injectInitializerCode" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
 <li class="tsd-signature tsd-anchor-link" id="injectInitializerCode.injectInitializerCode-1"><span class="tsd-kind-call-signature">inject<wbr/>Initializer<wbr/>Code</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">code</span>, <span class="tsd-kind-parameter">initializers</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#injectInitializerCode.injectInitializerCode-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
@@ -372,9 +315,9 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 <h5><span class="tsd-kind-parameter">initializers</span>: <span class="tsd-signature-type ">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">bigint</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L143">simulator-testbed.ts:143</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L130">simulator-testbed.ts:130</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="loadContract" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>load<wbr/>Contract</span><a href="#loadContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<h3 class="tsd-anchor-link"><span>load<wbr/>Contract</span><a href="#loadContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="loadContract.loadContract-1"><span class="tsd-kind-call-signature">load<wbr/>Contract</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">codePath</span>, <span class="tsd-kind-parameter">initializers</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a><a href="#loadContract.loadContract-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
@@ -390,36 +333,96 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">initializers</span>: <span class="tsd-signature-type ">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">bigint</span><span class="tsd-signature-symbol">&gt;</span></h5>
-<div class="tsd-comment tsd-typography"><p>The initializer object for the contract - to use with <code>//&lt;TESTBED_INIT:var1,var2,var3&gt;</code> snippet</p>
+<div class="tsd-comment tsd-typography"><p>The initializer object for the contract - Initialization is prepended.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a></h4><p>The simulator testbed with the loaded contract.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L127">simulator-testbed.ts:127</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="toSimulatorTransactions" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>to<wbr/>Simulator<wbr/>Transactions</span><a href="#toSimulatorTransactions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L118">simulator-testbed.ts:118</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="runScenario" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>run<wbr/>Scenario</span><a href="#runScenario" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="toSimulatorTransactions.toSimulatorTransactions-1"><span class="tsd-kind-call-signature">to<wbr/>Simulator<wbr/>Transactions</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">scenario</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toSimulatorTransactions.toSimulatorTransactions-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="runScenario.runScenario-1"><span class="tsd-kind-call-signature">run<wbr/>Scenario</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">scenario</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a><a href="#runScenario.runScenario-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Converts an array of <code>UserTransactionObj</code> objects into a JSON string that can be used in side the <a href="https://deleterium.info/sc-simulator/">Simulator UI</a></p>
+<div class="tsd-comment tsd-typography"><p>Runs a scenario by simulating a series of user transactions.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">scenario</span>: <span class="tsd-signature-type ">UserTransactionObj</span><span class="tsd-signature-symbol">[]</span></h5>
-<div class="tsd-comment tsd-typography"><p>The array of <code>UserTransactionObj</code> objects to be converted.</p>
+<h5><span class="tsd-kind-parameter">scenario</span>: <span class="tsd-signature-type ">TransactionObj</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></h5>
+<div class="tsd-comment tsd-typography"><p>The array of user transactions representing the scenario.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><ul>
-<li>The JSON string representation of the <code>scenario</code> array.</li>
+<h4 class="tsd-returns-title">Returns <a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a></h4><ul>
+<li>Returns the current instance of the class.</li>
 </ul>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/53b39f6/src/simulator-testbed.ts#L113">simulator-testbed.ts:113</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L237">simulator-testbed.ts:237</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="selectContract" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>select<wbr/>Contract</span><a href="#selectContract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="selectContract.selectContract-1"><span class="tsd-kind-call-signature">select<wbr/>Contract</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a><a href="#selectContract.selectContract-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Updates the current contract to the contract at the specified address.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The contract address to select. Throws error if contract is not found.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="SimulatorTestbed.html" class="tsd-signature-type tsd-kind-class">SimulatorTestbed</a></h4>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L153">simulator-testbed.ts:153</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="sendTransactionAndGetResponse" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>send<wbr/>Transaction<wbr/>And<wbr/>Get<wbr/>Response</span><a href="#sendTransactionAndGetResponse" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="sendTransactionAndGetResponse.sendTransactionAndGetResponse-1"><span class="tsd-kind-call-signature">send<wbr/>Transaction<wbr/>And<wbr/>Get<wbr/>Response</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">TXs</span>, <span class="tsd-kind-parameter">address</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">BlockchainTransactionObj</span><span class="tsd-signature-symbol">[]</span><a href="#sendTransactionAndGetResponse.sendTransactionAndGetResponse-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Sends the argument transactions at the next blockheight and returns all
+transactions from the selected contract in the subsequent height.
+Input transactions are modified to match blockheight and contract address.
+This method forges two blocks in order to get the response.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">TXs</span>: <span class="tsd-signature-type ">TransactionObj</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>Transactions to send.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">address</span>: <span class="tsd-signature-type">bigint</span></h5>
+<div class="tsd-comment tsd-typography"><p>The target contract address (default: the last deployed).</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">BlockchainTransactionObj</span><span class="tsd-signature-symbol">[]</span></h4><p>An array of transactions, or empty array if no one was found.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L332">simulator-testbed.ts:332</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-private"><a id="toSimulatorTransactions" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>to<wbr/>Simulator<wbr/>Transactions</span><a href="#toSimulatorTransactions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-private">
+<li class="tsd-signature tsd-anchor-link" id="toSimulatorTransactions.toSimulatorTransactions-1"><span class="tsd-kind-call-signature">to<wbr/>Simulator<wbr/>Transactions</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">scenario</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#toSimulatorTransactions.toSimulatorTransactions-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">scenario</span>: <span class="tsd-signature-type ">TransactionObj</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/ohager/signum-smartc-testbed/blob/a9feb57/src/simulator-testbed.ts#L104">simulator-testbed.ts:104</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -438,32 +441,27 @@ expected result sets. This class is meant to be used with Test Runners like <a h
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
 <div class="tsd-accordion-details">
 <ul>
-<li><a href="#constructor" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
-<li><a href="#context" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>context</span></a></li>
-<li><a href="#blockchain" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>blockchain</span></a></li>
-<li><a href="#contracts" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>contracts</span></a></li>
-<li><a href="#simulator" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>simulator</span></a></li>
+<li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
+<li><a href="#Node" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>Node</span></a></li>
 <li><a href="#getAccount" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Account</span></a></li>
 <li><a href="#getContract" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract</span></a></li>
+<li><a href="#getContractMap" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Map</span></a></li>
+<li><a href="#getContractMapValue" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Map<wbr/>Value</span></a></li>
+<li><a href="#getContractMapValues" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Map<wbr/>Values</span></a></li>
 <li><a href="#getContractMemory" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Memory</span></a></li>
 <li><a href="#getContractMemoryValue" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Contract<wbr/>Memory<wbr/>Value</span></a></li>
-<li><a href="#getMapValuePerSlot" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Map<wbr/>Value<wbr/>Per<wbr/>Slot</span></a></li>
-<li><a href="#getMapValuesPerSlot" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Map<wbr/>Values<wbr/>Per<wbr/>Slot</span></a></li>
-<li><a href="#getMapsPerSlot" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Maps<wbr/>Per<wbr/>Slot</span></a></li>
 <li><a href="#getTransactions" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Transactions</span></a></li>
-<li><a href="#runScenario" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>run<wbr/>Scenario</span></a></li>
-<li><a href="#selectCurrentContract" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>select<wbr/>Current<wbr/>Contract</span></a></li>
+<li><a href="#getTransactionsSentByContract" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Transactions<wbr/>Sent<wbr/>By<wbr/>Contract</span></a></li>
 <li><a href="#injectInitializerCode" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>inject<wbr/>Initializer<wbr/>Code</span></a></li>
 <li><a href="#loadContract" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>load<wbr/>Contract</span></a></li>
-<li><a href="#toSimulatorTransactions" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>to<wbr/>Simulator<wbr/>Transactions</span></a></li></ul></div></details></div>
+<li><a href="#runScenario" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>run<wbr/>Scenario</span></a></li>
+<li><a href="#selectContract" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>select<wbr/>Contract</span></a></li>
+<li><a href="#sendTransactionAndGetResponse" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>send<wbr/>Transaction<wbr/>And<wbr/>Get<wbr/>Response</span></a></li>
+<li><a href="#toSimulatorTransactions" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>to<wbr/>Simulator<wbr/>Transactions</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg><span>signum-smartc-testbed</span></a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="..">
-<li><a href="../modules/_internal_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>&lt;internal&gt;</a></li>
 <li><a href="SimulatorTestbed.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>SimulatorTestbed</a></li>
-<li><a href="../types/BlockchainType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>BlockchainType</a></li>
-<li><a href="../types/ContractsType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>ContractsType</a></li>
-<li><a href="../types/SimulatorType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>SimulatorType</a></li>
 <li><a href="../functions/asHexMessage.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg>asHexMessage</a></li></ul></nav></div></div></div>
 <div class="tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" rel="noopener" target="_blank">TypeDoc</a></p></div>
