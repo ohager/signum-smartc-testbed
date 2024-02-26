@@ -17,9 +17,10 @@
 
 long percentage;
 
-// This line is used by the test bed initialization
-// see also: https://ohager.github.io/signum-smartc-testbed/classes/SimulatorTestbed.html
-// <TESTBED_INIT:percentage>
+// Define values if not running on testbed (i.e. in web based simulator)
+#ifdef TESTBED
+    const percentage = TESTBED_percentage;
+#endif
 
 // INTERNALS
 struct TXINFO {

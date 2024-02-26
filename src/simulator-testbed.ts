@@ -215,8 +215,10 @@ ${code}`;
    * @param {bigint} accountId - The ID of the account to retrieve.
    * @return {AccountObj | undefined} The account with the specified ID, or undefined if no account is found.
    */
-  getAccount(accountId: bigint): AccountObj | undefined {
-    return this.Node.Blockchain.accounts.find((a) => a.id === accountId);
+  getAccount(accountId: bigint): AccountObj | null {
+    return (
+      this.Node.Blockchain.accounts.find((a) => a.id === accountId) || null
+    );
   }
 
   /**
@@ -259,16 +261,9 @@ ${code}`;
    * @throws Error if invalid contract
    */
   getContract(address?: bigint): Contract {
-    if (!address) {
-      const contract = this.Node.Simulator.getCurrentSlotContract();
-      if (!contract) {
-        throw new Error("Invalid contract address");
-      }
-      return contract;
-    }
-    const contract = this.Node.Blockchain.Contracts.find(
-      (sc) => sc.contract === address,
-    );
+    const contract = !address
+      ? this.Node.Simulator.getCurrentSlotContract()
+      : this.Node.Blockchain.Contracts.find((sc) => sc.contract === address);
     if (!contract) {
       throw new Error("Invalid contract address");
     }
@@ -293,12 +288,10 @@ ${code}`;
    * @return {bigint} - The value of the variable if found, otherwise null.
    */
   getContractMemoryValue(name: string, address?: bigint) {
-    for (let v of this.getContract(address).Memory) {
-      if (v.varName === name) {
-        return v.value;
-      }
-    }
-    return null;
+    const found = this.getContract(address).Memory.find(
+      ({ varName }) => varName === name,
+    );
+    return found?.value ?? null;
   }
 
   /**
@@ -325,26 +318,28 @@ ${code}`;
    * Input transactions are modified to match blockheight and contract address.
    * This method forges two blocks in order to get the response.
    *
-   * @param {TransactionObj[]} TXs - Transactions to send.
+   * @param {TransactionObj[]} transactions - Transactions to send.
    * @param {bigint} address - The target contract address (default: the last deployed).
    * @return {any} An array of transactions, or empty array if no one was found.
    */
   sendTransactionAndGetResponse(
-    TXs: TransactionObj[],
+    transactions: TransactionObj[],
     address?: bigint,
   ): BlockchainTransactionObj[] {
     const contract = this.getContract(address);
-    TXs.forEach((tx) => {
-      tx.blockheight = this.Node.Blockchain.getCurrentBlock() + 1;
+    transactions.forEach((tx) => {
+      tx.blockheight = this.Node.Blockchain.getCurrentBlock();
       tx.recipient = contract.contract;
     });
-    const status = this.Node.appendScenario(this.toSimulatorTransactions(TXs));
+    const status = this.Node.appendScenario(
+      this.toSimulatorTransactions(transactions),
+    );
     if (status.errorCode) {
       throw new Error(
         "Appending transactions returned error: " + status.errorDescription,
       );
     }
     const height = this.Node.forgeBlocks(2);
-    return this.getTransactionsSentByContract(height);
+    return this.getTransactionsSentByContract(height - 1);
   }
 }

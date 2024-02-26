@@ -22,4 +22,11 @@ export const TestScenario: TransactionObj[] = [
       Context.SenderAccount1,
     ]),
   },
+  {
+    blockheight: 3,
+    amount: 2000_0000n,
+    sender: Context.SenderAccount1,
+    recipient: Context.ThisContract,
+    messageHex: asHexMessage([Context.Methods.SetMapValue, 1n, 666n]),
+  },
 ];
