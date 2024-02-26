@@ -937,24 +937,15 @@ slice-ansi@^5.0.0:
     ansi-styles "^6.0.0"
     is-fullwidth-code-point "^4.0.0"
 
-<<<<<<< HEAD
-smartc-signum-simulator@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/smartc-signum-simulator/-/smartc-signum-simulator-3.0.1.tgz#3029eff3b9b0ce776106bfa439268edf7b0ac7fa"
-  integrity sha512-6BDJeHFg73zFETokQ9ksFyDpjwy18HCNKl8Qj34JPf6aact6aTZ4g+MAZj76PaqUBG+5hq9uxcg6zHiPIV5LaA==
-=======
 smartc-signum-compiler@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/smartc-signum-compiler/-/smartc-signum-compiler-2.2.1.tgz#3ba41a86286c74867e02ee9cd93305659fe41823"
   integrity sha512-W98XPx42DIyB9yMzGjPIitN/yCs4XVOYEPSg9MAqWyqi8U0za6Qag3qvp2fp6thhNgEbZ8NCfCBQLS7XVjWQlA==
 
-smartc-signum-simulator@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/smartc-signum-simulator/-/smartc-signum-simulator-3.0.0.tgz#f543636f80e6a958d93e048356fec31b95a12bac"
-  integrity sha512-Cx7iViy8uBYgqNQeml1ogVGBsyPc+PPaHWa+GUHXBO3J5ZFidmO1bCyZNPSehna35+N7YFGvadeeFDSzJg+Wmw==
-  dependencies:
-    smartc-signum-compiler "^2.2.1"
->>>>>>> 10880b1d15d291efd88e57658616fb574d53396d
+smartc-signum-simulator@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/smartc-signum-simulator/-/smartc-signum-simulator-3.0.2.tgz#d6872d83fd17eb935d518409f4bd5b469c01acd9"
+  integrity sha512-1rx9wcDYt5/A+ZrRlr8YCAV1cP+McNR4M+LlCDmF1kAEyLGfqwSGK+fNAzPEXTILrrAriP4IUsuBsZaoI57uYg==
 
 source-map-js@^1.0.2:
   version "1.0.2"

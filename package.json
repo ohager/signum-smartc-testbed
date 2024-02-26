@@ -35,7 +35,8 @@
   },
   "homepage": "https://github.com/ohager/signum-smartc-testbed#readme",
   "dependencies": {
-    "smartc-signum-simulator": "^3.0.1"
+    "smartc-signum-compiler": "^2.2.1",
+    "smartc-signum-simulator": "^3.0.2"
   },
   "devDependencies": {
     "husky": "^8.0.0",
