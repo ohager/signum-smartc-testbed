@@ -42,7 +42,7 @@ type Contract = CONTRACT;
  *
  *  const bc = Testbed.Node.Blockchain;
  *  const tx = bc.transactions;
- *  const maps = testbed.getContractMaps().filter(({k1, k2, value}) => ...)
+ *  const map = testbed.getContractMap().filter(({k1, k2, value}) => ...)
  * ```
  *
  * __INITIALIZE CONTRACT__
@@ -86,12 +86,17 @@ type Contract = CONTRACT;
  * expected result sets. This class is meant to be used with Test Runners like [Vitest](https://vitest.dev/) or [Jest](https://jestjs.io/).
  */
 export class SimulatorTestbed {
-  Node: SimNode;
+  private node: SimNode;
+
+  /**
+   * Constructs a simulator testbed instance with or without given scenario
+   * @param scenario The initial scenario to be used.
+   */
   constructor(scenario?: TransactionObj[]) {
-    this.Node = new SimNode();
+    this.node = new SimNode();
     if (scenario) {
-      const status = this.Node.setScenario(
-        this.toSimulatorTransactions(scenario),
+      const status = this.node.setScenario(
+        SimulatorTestbed.toSimulatorTransactions(scenario),
       );
       if (status.errorCode) {
         throw new Error(
@@ -101,7 +106,12 @@ export class SimulatorTestbed {
     }
   }
 
-  private toSimulatorTransactions(scenario: TransactionObj[]): string {
+  /**
+   * Converts a scenario into a Simulator UI compatible string
+   * @param scenario Scenario Object
+   * @return string
+   */
+  public static toSimulatorTransactions(scenario: TransactionObj[]): string {
     return JSON.stringify(
       scenario,
       (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
@@ -123,7 +133,7 @@ export class SimulatorTestbed {
     if (initializers) {
       code = this.injectInitializerCode(code, initializers);
     }
-    this.Node.loadSmartContract(code, 555n);
+    this.node.loadSmartContract(code, 555n);
     return this;
   }
 
@@ -151,7 +161,7 @@ ${code}`;
    * @param {bigint} address - The contract address to select. Throws error if contract is not found.
    */
   selectContract(address: bigint) {
-    if (!this.Node.Simulator.setCurrentSlotContract(address)) {
+    if (!this.node.Simulator.setCurrentSlotContract(address)) {
       throw new Error("Invalid contract address.");
     }
     return this;
@@ -161,17 +171,17 @@ ${code}`;
    * Retrieves the maps per contract.
    *
    * @param {bigint} address - The contract address (default: the last deployed).
-   * @return {any} The maps per slot.
+   * @return {any} The maps per contract.
    */
   getContractMap(address?: bigint): MapObj[] {
     if (!address) {
-      address = this.Node.Simulator.CurrentContract?.contract;
+      address = this.node.Simulator.CurrentContract?.contract;
     }
     if (!address) {
       throw new Error("Contract not specified");
     }
-    const BlockchainMap = this.Node.Blockchain.maps.find(
-      (M) => M.id === address,
+    const BlockchainMap = this.node.Blockchain.maps.find(
+      (map) => map.id === address,
     );
     return BlockchainMap?.map ?? [];
   }
@@ -217,7 +227,7 @@ ${code}`;
    */
   getAccount(accountId: bigint): AccountObj | null {
     return (
-      this.Node.Blockchain.accounts.find((a) => a.id === accountId) || null
+      this.node.Blockchain.accounts.find((a) => a.id === accountId) || null
     );
   }
 
@@ -227,7 +237,7 @@ ${code}`;
    * @return {BlockchainTransactionObj[]} - An array of BlockchainTransactionObj objects.
    */
   getTransactions(): BlockchainTransactionObj[] {
-    return this.Node.Blockchain.transactions;
+    return this.node.Blockchain.transactions;
   }
 
   /**
@@ -237,19 +247,19 @@ ${code}`;
    * @return {this} - Returns the current instance of the class.
    */
   runScenario(scenario: TransactionObj[] = []) {
-    const scenarioStr = this.toSimulatorTransactions(scenario);
-    const status = this.Node.appendScenario(scenarioStr);
+    const scenarioStr = SimulatorTestbed.toSimulatorTransactions(scenario);
+    const status = this.node.appendScenario(scenarioStr);
     if (status.errorCode) {
       throw new Error(
         "Appending transactions returned error: " + status.errorDescription,
       );
     }
-    const lastScenarioBlock = this.Node.scenarioTransactions.reduce(
+    const lastScenarioBlock = this.node.scenarioTransactions.reduce(
       (p, c) => Math.max(c.blockheight ?? 0, p),
       0,
     );
-    this.Node.forgeUntilBlock(lastScenarioBlock + 2);
-    console.debug(`Blocks forged until height ${this.Node.forgeBlock()}.`);
+    this.node.forgeUntilBlock(lastScenarioBlock + 2);
+    console.debug(`Blocks forged until height ${this.node.forgeBlock()}.`);
     return this;
   }
 
@@ -262,8 +272,8 @@ ${code}`;
    */
   getContract(address?: bigint): Contract {
     const contract = !address
-      ? this.Node.Simulator.getCurrentSlotContract()
-      : this.Node.Blockchain.Contracts.find((sc) => sc.contract === address);
+      ? this.node.Simulator.getCurrentSlotContract()
+      : this.node.Blockchain.Contracts.find((sc) => sc.contract === address);
     if (!contract) {
       throw new Error("Invalid contract address");
     }
@@ -307,7 +317,7 @@ ${code}`;
     address?: bigint,
   ): BlockchainTransactionObj[] {
     const contract = this.getContract(address);
-    return this.Node.Blockchain.transactions.filter(
+    return this.node.Blockchain.transactions.filter(
       (tx) => tx.blockheight === blockheight && tx.sender === contract.contract,
     );
   }
@@ -328,18 +338,18 @@ ${code}`;
   ): BlockchainTransactionObj[] {
     const contract = this.getContract(address);
     transactions.forEach((tx) => {
-      tx.blockheight = this.Node.Blockchain.getCurrentBlock();
+      tx.blockheight = this.node.Blockchain.getCurrentBlock();
       tx.recipient = contract.contract;
     });
-    const status = this.Node.appendScenario(
-      this.toSimulatorTransactions(transactions),
+    const status = this.node.appendScenario(
+      SimulatorTestbed.toSimulatorTransactions(transactions),
     );
     if (status.errorCode) {
       throw new Error(
         "Appending transactions returned error: " + status.errorDescription,
       );
     }
-    const height = this.Node.forgeBlocks(2);
+    const height = this.node.forgeBlocks(2);
     return this.getTransactionsSentByContract(height - 1);
   }
 }
