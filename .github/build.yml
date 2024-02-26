@@ -1,0 +1,16 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  steps:
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: "18"
+    - name: Initialize
+      run: yarn install --frozen-lockfile
+    - name: Build & Test
+      run: |
+        yarn compile
+        yarn test
