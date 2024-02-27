@@ -7,7 +7,7 @@ describe("Simulator Testbed", () => {
   let testbed: SimulatorTestbed;
   beforeEach(() => {
     testbed = new SimulatorTestbed(TestScenario)
-      .loadContract(Context.ContractPath, { percentage: 20 })
+      .loadContract(Context.ContractPath, { percentage: 20, text: "TEXT" })
       .runScenario();
   });
 

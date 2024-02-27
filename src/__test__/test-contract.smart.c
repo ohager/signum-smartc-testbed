@@ -16,10 +16,12 @@
 #define MAP_KEY_EXAMPLE 1
 
 long percentage;
+long text;
 
 // Define values if not running on testbed (i.e. in web based simulator)
 #ifdef TESTBED
     const percentage = TESTBED_percentage;
+    const text = TESTBED_text;
 #endif
 
 // INTERNALS

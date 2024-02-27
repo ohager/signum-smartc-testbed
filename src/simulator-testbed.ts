@@ -138,7 +138,15 @@ export class SimulatorTestbed {
   ) {
     let init = "";
     for (const key in initializers) {
-      init += `#define TESTBED_${key} ${String(initializers[key])}\n`;
+      const value = initializers[key];
+      if (typeof value === "string") {
+        if (value.length > 8) {
+          throw new Error("String cannot be longer than 8 chars");
+        }
+        init += `#define TESTBED_${key} "${initializers[key]}"\n`;
+      } else {
+        init += `#define TESTBED_${key} ${String(initializers[key])}\n`;
+      }
     }
 
     return `
