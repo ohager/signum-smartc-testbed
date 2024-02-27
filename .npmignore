@@ -1,3 +1,9 @@
 docs
 .idea
 .husky
+.github
+coverage
+*.tgz
+*.log
+typedoc.json
+build.sh

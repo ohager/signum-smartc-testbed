@@ -109,7 +109,7 @@ Look at [API Documentation](https://ohager.github.io/signum-smartc-testbed/index
 ## ROADMAP
 
 - [x] Github Starter Template
-- [ ] Unit Tests
+- [x] Unit Tests
 - [x] Externalize Utility Functions, e.g. method args conversion
-- [ ] Stable MultiSlot Support
+- [x] Stable MultiSlot Support
 - [ ] Adding Testbed for real Blockchain Node
