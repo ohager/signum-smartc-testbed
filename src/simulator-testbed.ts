@@ -57,13 +57,14 @@ type Contract = CONTRACT;
  * // a good practice to have them declared as first variables in your contract
  * long var1, var2, var3;
  *
- * // Define values if not running on testbed (i.e. in web based simulator)
- * #ifndef TESTBED
- *  #define TESTBED_value1 10
+ * // Define values if running on testbed
+ * #ifdef TESTBED
+ *  const var1 = TESTBED_var1;
+ *  const var2 = TESTBED_var2;
+ *  const var3 = TESTBED_var3;
  * #endif
  *
  * // This way your variable can be tested with different values easily in testbed
- * const var1 = TESTBED_value1
  * ```
  *
  *
@@ -73,13 +74,12 @@ type Contract = CONTRACT;
  *
  * const testbed = SimulatorTestbed
  *     .loadContract(ContractPath, {
- *           value1: "Text",
- *           value2: 1,
- *           value3: 100n
- *           }
+ *           var1: "Text",
+ *           var2: 1,
+ *           var3: 100n
+ *           } // initial values
  *     ).runScenario(Scenario1);
  * ```
- * When the given Injection Snippet is given it will be replaced by the following code:
  *
  * This testbed loads a SmartC Contract and a scenario (set of transactions) and forges all necessary blocks.
  * It's possible to inspect all the results, i.e. transactions, kkv-maps, accounts, in-memory variables, and test them against
