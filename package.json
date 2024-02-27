@@ -1,6 +1,6 @@
 {
   "name": "signum-smartc-testbed",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A testbed for faster smart contract development with SmartC for Signum blockchain platform",
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
