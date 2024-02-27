@@ -11,10 +11,23 @@ describe("Simulator Testbed", () => {
       .runScenario();
   });
 
-  test("should getTransaction as expected", () => {
+  test("should getTransactions as expected", () => {
     const outgoingTxs = testbed.getTransactions();
     expect(outgoingTxs).toHaveLength(5);
     expect(outgoingTxs[0].sender).toBe(Context.SenderAccount1);
+  });
+
+  test("should getTransaction as expected", () => {
+    const tx = testbed.getTransaction(0);
+    expect(tx.txid).toBe(100n);
+  });
+
+  test("should getTransactionById as expected", () => {
+    expect(testbed.getTransactionById(102n)?.txid).toBe(102n);
+  });
+
+  test("should return null when getTransactionById not exists", () => {
+    expect(testbed.getTransactionById(110n)).toBeNull();
   });
 
   test("should getContract as expected", () => {

@@ -244,6 +244,30 @@ ${code}`;
   }
 
   /**
+   * Leaky abstraction that provides access to the underlying blockchain object
+   */
+  get blockchain() {
+    return this.node.Blockchain
+  }
+
+  /**
+   * Returns a single transaction by Index
+   * @param index  Index of transaction (not Id!), must not be negative nor greater than the transaction list
+   */
+  getTransaction(index: number): BlockchainTransactionObj {
+    return this.node.Blockchain.transactions[index];
+  }
+
+  /**
+   * Returns a single transaction by Id
+   * @param id Transaction Id
+   */
+  getTransactionById(id: bigint)   {
+    return this.getTransactions().find( ({txid}) => txid === id ) ?? null;
+  }
+
+
+  /**
    * Runs a scenario by simulating a series of user transactions.
    *
    * @param {TransactionObj[]} scenario - The array of user transactions representing the scenario.
