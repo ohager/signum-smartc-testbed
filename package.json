@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "scripts": {
-    "test": "vitest run --coverage",
+    "test": "VITE_CJS_IGNORE_WARNING=true vitest run --coverage",
     "compile": "tsc",
     "build": "npm run compile && ./build.sh",
     "prepare": "husky install",
