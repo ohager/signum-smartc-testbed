@@ -5,7 +5,8 @@ export const Context = {
   SenderAccount1: 10n,
   SenderAccount2: 20n,
   CreatorAccount: 555n,
-  ThisContract: 999n,
+  Contract1: 999n,
+  Contract2: 1000n,
   ActivationFee: 1000_0000n,
   Methods: {
     ForwardPercentage: 1n,

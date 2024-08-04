@@ -7,7 +7,7 @@ export const TestScenario: TransactionObj[] = [
     txid: 100n,
     amount: 10_2000_0000n,
     sender: Context.SenderAccount1,
-    recipient: Context.ThisContract,
+    recipient: Context.Contract1,
     messageHex: asHexMessage([
       Context.Methods.ForwardPercentage,
       Context.SenderAccount2,
@@ -18,7 +18,7 @@ export const TestScenario: TransactionObj[] = [
     txid: 101n,
     amount: 20_2000_0000n,
     sender: Context.SenderAccount2,
-    recipient: Context.ThisContract,
+    recipient: Context.Contract1,
     messageHex: asHexMessage([
       Context.Methods.ForwardPercentage,
       Context.SenderAccount1,
@@ -29,7 +29,15 @@ export const TestScenario: TransactionObj[] = [
     txid: 102n,
     amount: 2000_0000n,
     sender: Context.SenderAccount1,
-    recipient: Context.ThisContract,
+    recipient: Context.Contract1,
     messageHex: asHexMessage([Context.Methods.SetMapValue, 1n, 666n]),
+  },
+  {
+    blockheight: 3,
+    txid: 103n,
+    amount: 2000_0000n,
+    sender: Context.SenderAccount1,
+    recipient: Context.Contract2,
+    messageHex: asHexMessage([Context.Methods.SetMapValue, 1n, 667n]),
   },
 ];
