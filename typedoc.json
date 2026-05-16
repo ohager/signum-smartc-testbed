@@ -3,5 +3,6 @@
   "entryPoints": ["src/index.ts"],
   "out": "docs",
   "plugin": ["typedoc-theme-oxide", "typedoc-plugin-missing-exports"],
-  "excludeExternals": true
+  "excludeExternals": true,
+  "highlightLanguages": ["c", "typescript", "javascript", "json", "bash", "shell"]
 }
