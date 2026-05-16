@@ -11,6 +11,12 @@ import { readFileSync } from "fs";
 
 type Contract = CONTRACT;
 
+type LoadContractOptions = {
+  creator?: bigint;
+  contractId?: bigint;
+  initializers?: Record<string, number | string | bigint>;
+};
+
 /**
  * Simulator Testbed Class
  *
@@ -87,6 +93,7 @@ type Contract = CONTRACT;
  */
 export class SimulatorTestbed {
   private node: SimNode;
+  private _contractIdCounter: bigint = 0n;
 
   /**
    * Constructs a simulator testbed instance with or without given scenario
@@ -114,21 +121,21 @@ export class SimulatorTestbed {
   }
 
   /**
-   * Loads a contract from the specified code path and eventually initializes the contract with the provided initializers
+   * Loads a contract from the specified code path with optional creator, contractId, and initializers.
    *
    * @param {string} codePath - The path to the SmartC code file.
-   * @param initializers - The initializer object for the contract - Initialization is prepended.
-   * @return {SimulatorTestbed} The simulator testbed with the loaded contract.
+   * @param options - Optional creator, contractId, and initializers for the contract.
+   * @return {this} The simulator testbed with the loaded contract.
    */
-  public loadContract(
-    codePath: string,
-    initializers?: Record<string, number | string | bigint>,
-  ) {
+  public loadContract(codePath: string, options?: LoadContractOptions): this {
+    ++this._contractIdCounter;
+    const creator = options?.creator ?? 555n;
+    const contractId = options?.contractId ?? this._contractIdCounter;
     let code = readFileSync(codePath, "utf8");
-    if (initializers) {
-      code = this.injectInitializerCode(code, initializers);
+    if (options?.initializers) {
+      code = this.injectInitializerCode(code, options.initializers);
     }
-    this.node.loadSmartContract(code, 555n);
+    this.node.loadSmartContract(code, creator, contractId);
     return this;
   }
 
@@ -247,7 +254,7 @@ ${code}`;
    * Leaky abstraction that provides access to the underlying blockchain object
    */
   get blockchain() {
-    return this.node.Blockchain
+    return this.node.Blockchain;
   }
 
   /**
@@ -262,10 +269,9 @@ ${code}`;
    * Returns a single transaction by Id
    * @param id Transaction Id
    */
-  getTransactionById(id: bigint)   {
-    return this.getTransactions().find( ({txid}) => txid === id ) ?? null;
+  getTransactionById(id: bigint) {
+    return this.getTransactions().find(({ txid }) => txid === id) ?? null;
   }
-
 
   /**
    * Runs a scenario by simulating a series of user transactions.
@@ -305,6 +311,15 @@ ${code}`;
       throw new Error("Invalid contract address");
     }
     return contract;
+  }
+
+  /**
+   * Returns all contracts deployed on the simulated blockchain.
+   *
+   * @return {Contract[]} All deployed contracts.
+   */
+  getAllContracts(): Contract[] {
+    return this.node.Blockchain.Contracts;
   }
 
   /**

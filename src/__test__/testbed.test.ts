@@ -7,8 +7,12 @@ describe("Simulator Testbed", () => {
   let testbed: SimulatorTestbed;
   beforeEach(() => {
     testbed = new SimulatorTestbed(TestScenario)
-      .loadContract(Context.ContractPath, { percentage: 20, text: "TEXT" })
-      .loadContract(Context.ContractPath, { percentage: 10, text: "TEXT2" })
+      .loadContract(Context.ContractPath, {
+        initializers: { percentage: 20, text: "TEXT" },
+      })
+      .loadContract(Context.ContractPath, {
+        initializers: { percentage: 10, text: "TEXT2" },
+      })
       .runScenario();
   });
 
@@ -137,6 +141,44 @@ describe("Simulator Testbed", () => {
     expect(() => {
       testbed.getContractMemory(666n);
     }).toThrow("Invalid contract address");
+  });
+
+  test("should getAllContracts return all deployed contracts", () => {
+    const all = testbed.getAllContracts();
+    expect(all).toHaveLength(2);
+    expect(all.map((c) => c.contract)).toEqual(
+      expect.arrayContaining([Context.Contract1, Context.Contract2]),
+    );
+  });
+
+  test("should getContract return last loaded contract when no address given", () => {
+    const last = testbed.getContract();
+    expect(last.contract).toBe(Context.Contract2);
+  });
+
+  test("should loadContract with explicit contractId", () => {
+    const tb = new SimulatorTestbed().loadContract(Context.ContractPath, {
+      contractId: 7777n,
+    });
+    const contract = tb.getContract(7777n);
+    expect(contract.contract).toBe(7777n);
+  });
+
+  test("should loadContract with explicit creator", () => {
+    const tb = new SimulatorTestbed().loadContract(Context.ContractPath, {
+      creator: 4242n,
+    });
+    const contract = tb.getContract(1n);
+    expect(contract.creator).toBe(4242n);
+  });
+
+  test("should auto-increment contractId across explicit and implicit loads", () => {
+    const tb = new SimulatorTestbed()
+      .loadContract(Context.ContractPath) // counter=1 → id=1
+      .loadContract(Context.ContractPath, { contractId: 7777n }) // counter=2 → id=7777
+      .loadContract(Context.ContractPath); // counter=3 → id=3
+    const all = tb.getAllContracts();
+    expect(all.map((c) => c.contract)).toEqual([1n, 7777n, 3n]);
   });
 
   test("should run sendTransactionAndGetResponse as expected", () => {
