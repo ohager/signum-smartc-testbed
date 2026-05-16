@@ -154,10 +154,6 @@ const contract2 = testbed.getContract(2n);
 
 // Or list all deployed contracts
 const all = testbed.getAllContracts();
-
-// Switch the "current" contract for address-less method calls
-testbed.selectContract(1n);
-const map = testbed.getContractMap(); // uses contract 1
 ```
 
 You can also set the creator or contract ID explicitly:
@@ -168,6 +164,27 @@ new SimulatorTestbed().loadContract(ContractPath, {
   creator: 4242n,
 });
 ```
+
+### Active contract and load order
+
+The **last loaded contract is the active contract** — the default target for `getContract()`,
+`getContractMap()`, `sendTransactionAndGetResponse()`, and other address-less methods.
+
+In multi-contract setups, load helper or dependency contracts first and the **contract under test last**:
+
+```ts
+// ✅ Registry is last → active by default
+const testbed = new SimulatorTestbed(scenario)
+  .loadContract(helperContractPath, { creator: 4242n, contractId: 7777n })
+  .loadContract(registryContractPath); // active
+
+const helper = testbed.getContract(7777n);
+testbed.runScenario();
+
+// sendTransactionAndGetResponse targets the registry automatically
+```
+
+If you need a different contract to be active mid-test, use `selectContract(address)` explicitly.
 
 ## Testing Contract Responses
 

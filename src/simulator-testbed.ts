@@ -123,8 +123,13 @@ export class SimulatorTestbed {
   /**
    * Loads a contract from the specified code path with optional creator, contractId, and initializers.
    *
+   * The last loaded contract becomes the active contract, which is the default target for
+   * {@link getContract}, {@link getContractMap}, and {@link sendTransactionAndGetResponse} when
+   * called without an explicit address. In multi-contract setups, load helper/dependency contracts
+   * first and the contract under test last so it is active by default.
+   *
    * @param {string} codePath - The path to the SmartC code file.
-   * @param options - Optional creator, contractId, and initializers for the contract.
+   * @param options - Optional creator (default: 555n), contractId (default: auto-incremented), and initializers.
    * @return {this} The simulator testbed with the loaded contract.
    */
   public loadContract(codePath: string, options?: LoadContractOptions): this {
