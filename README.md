@@ -184,7 +184,13 @@ testbed.runScenario();
 // sendTransactionAndGetResponse targets the registry automatically
 ```
 
-If you need a different contract to be active mid-test, use `selectContract(address)` explicitly.
+If you need a different contract to be active mid-test, use `selectContract(address)` explicitly:
+
+```ts
+testbed.selectContract(7777n);
+const map = testbed.getContractMap(); // uses helper contract
+testbed.selectContract(registryId); // restore
+```
 
 ## Testing Contract Responses
 
