@@ -7,7 +7,6 @@ import {
   SimNode,
   CONTRACT,
 } from "smartc-signum-simulator";
-import { readFileSync } from "fs";
 
 type Contract = CONTRACT;
 
@@ -40,10 +39,10 @@ type LoadContractOptions = {
  *   // ...
  * ]
  *
- * const ContractPath = join(__dirname + './contract.smart.c')
+ * const ContractCode = readFileSync(join(__dirname + './contract.smart.c'), 'utf-8')
  *
  * const Testbed = new SimulatorTestbed()
- * Testbed.loadContract(ContractPath)
+ * Testbed.loadContract(ContractCode)
  *        .runScenario(Scenario1);
  *
  *  const bc = Testbed.Node.Blockchain;
@@ -76,10 +75,10 @@ type LoadContractOptions = {
  *
  * You may load the contract into the testbed as follows:
  * ```ts
- * const ContractPath = join(__dirname + './contract.smart.c')
+ * const ContractCode = readFileSync(join(__dirname + './contract.smart.c'), 'utf-8')
  *
  * const testbed = SimulatorTestbed
- *     .loadContract(ContractPath, {
+ *     .loadContract(ContractCode, {
  *           var1: "Text",
  *           var2: 1,
  *           var3: 100n
@@ -121,22 +120,21 @@ export class SimulatorTestbed {
   }
 
   /**
-   * Loads a contract from the specified code path with optional creator, contractId, and initializers.
+   * Loads a contract from the specified code with optional creator, contractId, and initializers.
    *
    * The last loaded contract becomes the active contract, which is the default target for
    * {@link getContract}, {@link getContractMap}, and {@link sendTransactionAndGetResponse} when
    * called without an explicit address. In multi-contract setups, load helper/dependency contracts
    * first and the contract under test last so it is active by default.
    *
-   * @param {string} codePath - The path to the SmartC code file.
+   * @param {string} code - The SmartC code.
    * @param options - Optional creator (default: 555n), contractId (default: auto-incremented), and initializers.
    * @return {this} The simulator testbed with the loaded contract.
    */
-  public loadContract(codePath: string, options?: LoadContractOptions): this {
+  public loadContract(code: string, options?: LoadContractOptions): this {
     ++this._contractIdCounter;
     const creator = options?.creator ?? 555n;
     const contractId = options?.contractId ?? this._contractIdCounter;
-    let code = readFileSync(codePath, "utf8");
     if (options?.initializers) {
       code = this.injectInitializerCode(code, options.initializers);
     }

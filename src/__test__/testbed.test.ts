@@ -7,10 +7,10 @@ describe("Simulator Testbed", () => {
   let testbed: SimulatorTestbed;
   beforeEach(() => {
     testbed = new SimulatorTestbed(TestScenario)
-      .loadContract(Context.ContractPath, {
+      .loadContract(Context.ContractCode, {
         initializers: { percentage: 20, text: "TEXT" },
       })
-      .loadContract(Context.ContractPath, {
+      .loadContract(Context.ContractCode, {
         initializers: { percentage: 10, text: "TEXT2" },
       })
       .runScenario();
@@ -157,7 +157,7 @@ describe("Simulator Testbed", () => {
   });
 
   test("should loadContract with explicit contractId", () => {
-    const tb = new SimulatorTestbed().loadContract(Context.ContractPath, {
+    const tb = new SimulatorTestbed().loadContract(Context.ContractCode, {
       contractId: 7777n,
     });
     const contract = tb.getContract(7777n);
@@ -165,7 +165,7 @@ describe("Simulator Testbed", () => {
   });
 
   test("should loadContract with explicit creator", () => {
-    const tb = new SimulatorTestbed().loadContract(Context.ContractPath, {
+    const tb = new SimulatorTestbed().loadContract(Context.ContractCode, {
       creator: 4242n,
     });
     const contract = tb.getContract(1n);
@@ -174,9 +174,9 @@ describe("Simulator Testbed", () => {
 
   test("should auto-increment contractId across explicit and implicit loads", () => {
     const tb = new SimulatorTestbed()
-      .loadContract(Context.ContractPath) // counter=1 → id=1
-      .loadContract(Context.ContractPath, { contractId: 7777n }) // counter=2 → id=7777
-      .loadContract(Context.ContractPath); // counter=3 → id=3
+      .loadContract(Context.ContractCode) // counter=1 → id=1
+      .loadContract(Context.ContractCode, { contractId: 7777n }) // counter=2 → id=7777
+      .loadContract(Context.ContractCode); // counter=3 → id=3
     const all = tb.getAllContracts();
     expect(all.map((c) => c.contract)).toEqual([1n, 7777n, 3n]);
   });

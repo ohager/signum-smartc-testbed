@@ -69,15 +69,16 @@ import { SimulatorTestbed } from "signum-smartc-testbed";
 import { join } from "path";
 import { Context } from "./context";
 import { ChangeUsageFee, ChangeUsageFeeNotAllowed } from "./scenarios";
+import { readFileSync } from "fs";
 
-const ContractPath = join(__dirname, "./contract.smart.c");
+const Contract = readFileSync(join(__dirname, "./contract.smart.c"), "utf-8");
 
 describe("Stock Contract - Change Usage Fee", () => {
   let testbed: SimulatorTestbed;
 
   beforeEach(() => {
     testbed = new SimulatorTestbed()
-      .loadContract(ContractPath)
+      .loadContract(Contract)
       .runScenario(ChangeUsageFee);
   });
 
@@ -93,7 +94,7 @@ describe("Stock Contract - Change Usage Fee", () => {
 
   test("try to change fee when not creator", () => {
     testbed = new SimulatorTestbed()
-      .loadContract(ContractPath)
+      .loadContract(Contract)
       .runScenario(ChangeUsageFeeNotAllowed);
     const bc = testbed.blockchain;
     expect(testbed.getContractMemoryValue("usageFee")).toEqual(5_0000_0000n);
@@ -128,7 +129,7 @@ Then pass initial values when loading the contract:
 
 ```ts
 const testbed = new SimulatorTestbed()
-  .loadContract(ContractPath, {
+  .loadContract(Contract, {
     initializers: {
       var1: "Text", // string (max 8 chars)
       var2: 1, // number
@@ -144,8 +145,8 @@ Load and test multiple contracts in the same simulation. Contracts are assigned 
 
 ```ts
 const testbed = new SimulatorTestbed(initialScenario)
-  .loadContract(ContractPath, { initializers: { percentage: 20 } }) // id=1
-  .loadContract(ContractPath, { initializers: { percentage: 10 } }) // id=2
+  .loadContract(Contract, { initializers: { percentage: 20 } }) // id=1
+  .loadContract(Contract, { initializers: { percentage: 10 } }) // id=2
   .runScenario();
 
 // Inspect a specific contract
@@ -159,7 +160,7 @@ const all = testbed.getAllContracts();
 You can also set the creator or contract ID explicitly:
 
 ```ts
-new SimulatorTestbed().loadContract(ContractPath, {
+new SimulatorTestbed().loadContract(Contract, {
   contractId: 9999n,
   creator: 4242n,
 });
@@ -175,8 +176,8 @@ In multi-contract setups, load helper or dependency contracts first and the **co
 ```ts
 // ✅ Registry is last → active by default
 const testbed = new SimulatorTestbed(scenario)
-  .loadContract(helperContractPath, { creator: 4242n, contractId: 7777n })
-  .loadContract(registryContractPath); // active
+  .loadContract(helperContract, { creator: 4242n, contractId: 7777n })
+  .loadContract(registryContract); // active
 
 const helper = testbed.getContract(7777n);
 testbed.runScenario();
@@ -220,7 +221,7 @@ expect(responses[0].recipient).toBe(Context.TargetAccount);
 | Method                                                  | Description                                                         |
 | ------------------------------------------------------- | ------------------------------------------------------------------- |
 | `new SimulatorTestbed(scenario?)`                       | Creates testbed, optionally with an initial set of transactions     |
-| `.loadContract(path, options?)`                         | Compiles and deploys a contract; chainable                          |
+| `.loadContract(code, options?)`                         | Compiles and deploys a contract; chainable                          |
 | `.runScenario(transactions?)`                           | Appends and executes a transaction set, forges all required blocks  |
 | `.selectContract(address)`                              | Sets the current contract for address-less queries                  |
 | `.sendTransactionAndGetResponse(txs, address?)`         | Sends transactions and returns the contract's response transactions |

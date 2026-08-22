@@ -1,7 +1,11 @@
 import { join } from "path";
+import { readFileSync } from "fs";
 
 export const Context = {
-  ContractPath: join(__dirname + "/test-contract.smart.c"),
+  ContractCode: readFileSync(
+    join(__dirname + "/test-contract.smart.c"),
+    "utf-8",
+  ),
   SenderAccount1: 10n,
   SenderAccount2: 20n,
   CreatorAccount: 555n,
